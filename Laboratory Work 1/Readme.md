@@ -2,13 +2,15 @@
 > K33401 - Рейнгеверц В.А.
 
 
-### Task 1
+## Task 1
 > Binary search
 >
 > Написать программу для бинарного поиска. 
 > Результатом должно быть количество шагов, которое потребуется, чтобы найти требуемое число.
+>
 
-[binarySearch.js](binarySearch.js)
+
+[binarySearch.js](BinarySearch/binarySearch.js)
 
 ![](https://i.imgur.com/5F3UCNZ.png)
 
@@ -30,8 +32,14 @@
 
 ![](https://i.imgur.com/IzC0x5K.png)
 
+### Running
 
-### Task 2
+```bash
+node binarySearch.js <number_to_find>
+```
+
+
+## Task 2
 > Для учебной группы составить словарь, который будет описывать характеристики каждого из студентов. 
 > Реализовать программу, которая по определенным характеристикам будет угадывать студента.
 >
@@ -44,3 +52,15 @@
 > \> …<br>
 > \> …<br>
 > \> Вы загадали Ивана Иванова. <br>
+
+[guessWho.js](GuessWho/guessWho.js)
+[guessWho.html](GuessWho/guessWho.html)
+
+![](https://i.imgur.com/xtAE8Ll.gif)
+
+### Running
+
+Open [guessWho.html](GuessWho/guessWho.html) in a browser
+
+
+## Task 3
