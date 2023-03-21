@@ -59,6 +59,8 @@ node binarySearch.js <number_to_find>
 
 [guessWho.html](GuessWho/guessWho.html)
 
+![](GuessWho/characters/all.png)
+
 ![](https://i.imgur.com/xtAE8Ll.gif)
 
 ### Running
