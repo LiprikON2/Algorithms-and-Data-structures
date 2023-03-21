@@ -38,8 +38,7 @@ const binarySearch = (sortedArray, target, pos = 0, recCount = 0) => {
     }
 };
 
-const sortedArray = [-10000, -1000, -100];
-// const sortedArray = [1, 3, 5, 6, 8, 9, 10, 12, 14, 16, 17];
+const sortedArray = [1, 3, 5, 6, 8, 9, 10, 12, 14, 16, 17];
 //                   0  1  2  3  4  5  6   7   8   9   10
 
 const cliArg = parseInt(process.argv[2]);
