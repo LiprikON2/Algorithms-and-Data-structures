@@ -40,6 +40,8 @@ node binarySearch.js <number_to_find>
 
 
 ## Task 2
+> Guess Who: Pulp Fiction
+>
 > Для учебной группы составить словарь, который будет описывать характеристики каждого из студентов. 
 > Реализовать программу, которая по определенным характеристикам будет угадывать студента.
 >
@@ -54,6 +56,7 @@ node binarySearch.js <number_to_find>
 > \> Вы загадали Ивана Иванова. <br>
 
 [guessWho.js](GuessWho/guessWho.js)
+
 [guessWho.html](GuessWho/guessWho.html)
 
 ![](https://i.imgur.com/xtAE8Ll.gif)
