@@ -1,6 +1,6 @@
-const positiveAnswers = ["yes", "ye", "y", "yep", "yeah", "true", "д", "да", "ага"];
+export const positiveAnswers = ["yes", "ye", "y", "yep", "yeah", "true", "д", "да", "ага"];
 
-const createPredicate = (label, answers = []) => {
+export const createPredicate = (label, answers = []) => {
     const predicateObj = {
         label,
         answers,
@@ -15,9 +15,9 @@ const createPredicate = (label, answers = []) => {
     return predicateObj;
 };
 
-const createYesPredicate = (label) => createPredicate(label, positiveAnswers);
+export const createYesPredicate = (label) => createPredicate(label, positiveAnswers);
 
-const createNode = (predicate = null, left = null, right = null, value = null) => {
+export const createNode = (predicate = null, left = null, right = null, value = null) => {
     if (!predicate && !value) {
         throw new Error("Either value or predicate must be provided");
     }
@@ -47,12 +47,9 @@ const createNode = (predicate = null, left = null, right = null, value = null) =
     };
 };
 
-const createEndNode = (value) => createNode(null, null, null, value);
+export const createEndNode = (value) => createNode(null, null, null, value);
 
-// https://www.huffpost.com/entry/pulp-fiction-guess-who_n_4676563
-alert("Guess Who: Pulp Fiction\n\nProceed after you thought of a character.");
-
-const tree = createNode(
+export const tree = createNode(
     createYesPredicate("Does your character usually wear lipstic?"),
     createNode(
         createYesPredicate("Does your character have even bangs?"),
@@ -98,4 +95,45 @@ const tree = createNode(
     )
 );
 
-tree.prompt();
+export const convertToGraphData = (tree, nodes = [], edges = [], path = "Root", srcEdge = null) => {
+    const nodeId = path + "Node";
+    if (srcEdge) {
+        srcEdge.data.target = nodeId;
+        edges.push(srcEdge);
+    }
+
+    if (tree.predicate) {
+        const nodeLabel = tree.predicate.label;
+        nodes.push({ data: { id: nodeId, label: nodeLabel } });
+        const leftEdgeId = path + "LeftEdge";
+        const leftEdgeLabel = "no";
+
+        const rightEdgeId = path + "RightEdge";
+        const rightEdgeLabel = tree.predicate.answers[0];
+
+        const rightEdge = {
+            data: {
+                id: leftEdgeId,
+                label: leftEdgeLabel,
+                source: nodeId,
+                target: null,
+            },
+        };
+        const leftEdge = {
+            data: {
+                id: rightEdgeId,
+                label: rightEdgeLabel,
+                source: nodeId,
+                target: null,
+            },
+        };
+
+        convertToGraphData(tree.left, nodes, edges, path + "->L", leftEdge);
+        convertToGraphData(tree.right, nodes, edges, path + "->R", rightEdge);
+    } else {
+        const nodeLabel = tree.value;
+        nodes.push({ data: { id: nodeId, label: nodeLabel } });
+    }
+
+    return [nodes, edges];
+};

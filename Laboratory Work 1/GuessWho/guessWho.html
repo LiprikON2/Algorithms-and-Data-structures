@@ -16,6 +16,16 @@
         </style>
     </head>
     <body>
-        <script src="guessWho.js"></script>
+        <script type="module" src="guessWho.js"></script>
+        <script type="module">
+            import { tree } from "./guessWho.js";
+
+            console.log("tree", tree);
+            try {
+                // https://www.huffpost.com/entry/pulp-fiction-guess-who_n_4676563
+                alert("Guess Who: Pulp Fiction\n\nProceed after you thought of a character.");
+                tree.prompt();
+            } catch (e) {}
+        </script>
     </body>
 </html>

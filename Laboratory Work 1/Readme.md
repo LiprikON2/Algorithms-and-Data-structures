@@ -10,7 +10,7 @@
 >
 
 
-[binarySearch.js](BinarySearch/binarySearch.js)
+[BinarySearch/binarySearch.js](BinarySearch/binarySearch.js)
 
 ![](https://i.imgur.com/5F3UCNZ.png)
 
@@ -55,17 +55,84 @@ node binarySearch.js <number_to_find>
 > \> …<br>
 > \> Вы загадали Ивана Иванова. <br>
 
-[guessWho.js](GuessWho/guessWho.js)
+[GuessWho/guessWho.js](GuessWho/guessWho.js)
 
-[guessWho.html](GuessWho/guessWho.html)
+[GuessWho/guessWho.html](GuessWho/guessWho.html)
 
 ![](GuessWho/characters/all.png)
 
 ![](https://i.imgur.com/xtAE8Ll.gif)
 
+Итоговый словарь
+```js
+export const tree = createNode(
+    createYesPredicate("Does your character usually wear lipstic?"),
+    createNode(
+        createYesPredicate("Does your character have even bangs?"),
+        createEndNode("Mia"),
+        createNode(
+            createYesPredicate("Does your character have blue eyes?"),
+            createEndNode("Raquel"),
+            createEndNode("Trudi")
+        )
+    ),
+    createNode(
+        createYesPredicate("Does your character have a big beard?"),
+        createNode(
+            createYesPredicate("Is your character ginger?"),
+            createEndNode("Lance"),
+            createEndNode("Maynard")
+        ),
+        createNode(
+            createYesPredicate("Does your character have black skin?"),
+            createEndNode("Jules"),
+            createNode(
+                createYesPredicate("Is your character bald?"),
+                createEndNode("Butch"),
+                createNode(
+                    createYesPredicate("Does your character have mustache?"),
+                    createEndNode("Winston"),
+                    createNode(
+                        createYesPredicate("Did your character pierce his ear?"),
+                        createEndNode("Vincent"),
+                        createNode(
+                            createYesPredicate("Does your character have green eyes?"),
+                            createEndNode("Ringo"),
+                            createNode(
+                                createYesPredicate("Is your character blonde?"),
+                                createEndNode("Zed"),
+                                createEndNode("Brett")
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+);
+```
+
+
 ### Running
 
-Open [guessWho.html](GuessWho/guessWho.html) in a browser
-
+Use http server to serve [GuessWho/guessWho.html](GuessWho/guessWho.html) file
 
 ## Task 3
+> Составьте граф для задания №2.
+>
+
+[Graphs/main.js](Graphs/main.js)
+
+"Словарь", из предыдущего задания динамически конверируется в nodes и edges (функция [convertToGraphData()](GuessWho/guessWho.js#L98)), затем отрисовывается при помощи библиотеки cytoscape в [Graphs/main.js](Graphs/main.js#L49).
+
+![](https://i.imgur.com/eMFGrdu.png)
+
+### Running
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
