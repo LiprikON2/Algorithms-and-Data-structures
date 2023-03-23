@@ -124,9 +124,13 @@ const findLongestPath = (nodes, edges) => {
     return longestPath;
 };
 
-let [nodes, edges] = getGraphData(100, 20);
+const n = 100;
+const m = 17;
+let [nodes, edges] = getGraphData(n, m);
 
 const longestPath = findLongestPath(nodes, edges);
+
+console.log("nodes", edges);
 console.log("edges", edges);
 console.log("longestPath", longestPath);
 
@@ -165,7 +169,6 @@ const cy = cytoscape({
                 width: 3,
                 "line-color": "#f2ab1b",
                 "target-arrow-color": "#f2ab1b",
-                // "target-arrow-shape": "triangle",
                 "curve-style": "bezier",
                 content: "data(label)",
                 color: "#cccccc",
@@ -190,3 +193,14 @@ const cy = cytoscape({
 
 const layout = cy.makeLayout({ name: "spread", prelayout: false, padding: 20 });
 layout.run();
+
+document.getElementById("data").innerText = `\
+N (number of cities) = ${n}
+M (min common denominator) = ${m}
+`;
+
+document.getElementById("output").innerText = `\
+Nodes: ${nodes.length}
+Edges: ${edges.length}
+Longest Path: ${longestPath.length} edges
+`;
