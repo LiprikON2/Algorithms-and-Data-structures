@@ -1,6 +1,9 @@
+import cytoscape from "cytoscape";
+import spread from "cytoscape-spread";
+
 import "./style.css";
 
-import cytoscape from "cytoscape";
+spread(cytoscape);
 
 const getNCities = (n) => {
     const nCities = [...Array(n + 1).keys()];
@@ -64,10 +67,80 @@ const getGraphData = (numberOfCities, minCommonDenominatorForEdge) => {
     return [nodes, edges];
 };
 
-const [nodes, edges] = getGraphData(10, 1);
+const getConnectedEdges = (nodeId, edges) => {
+    return edges.filter((edge) => edge.data.source === nodeId || edge.data.target === nodeId);
+};
 
-console.log("nodes", nodes);
+const findPathsBetween = (aNodeId, bNodeId, edges, visited = []) => {
+    const connectedEdges = getConnectedEdges(aNodeId, edges);
+    let paths = [];
+    for (let edge of connectedEdges) {
+        const isBNodeReached =
+            (edge.data.source === aNodeId && edge.data.target === bNodeId) ||
+            (edge.data.source === bNodeId && edge.data.target === aNodeId);
+        const isVisited = visited.includes(edge.data.source) || visited.includes(edge.data.target);
+
+        if (isBNodeReached) {
+            paths.push([edge]);
+            continue;
+        }
+        if (isVisited) continue;
+
+        const outgoingNodeId = edge.data.source !== aNodeId ? edge.data.source : edge.data.target;
+        const childPaths = findPathsBetween(outgoingNodeId, bNodeId, edges, [aNodeId, ...visited]);
+        // Add current edge to the child paths
+        const somePaths = childPaths.map((childPath) => [edge, ...childPath]);
+
+        paths = [...paths, ...somePaths];
+    }
+    // Remove empty paths
+    paths.filter((path) => path.length);
+
+    return paths;
+};
+
+const getLongestArray = (arrays) => {
+    return arrays.reduce(
+        (accumulator, array) => (accumulator.length <= array.length ? array : accumulator),
+        { length: 0 }
+    );
+};
+
+const findLongestPath = (nodes, edges) => {
+    let longestPath = [];
+
+    for (let node of nodes) {
+        for (let targetNode of nodes) {
+            if (node !== targetNode) {
+                const allPaths = findPathsBetween(node.data.id, targetNode.data.id, edges);
+                const path = getLongestArray(allPaths);
+                if (path.length > longestPath.length) {
+                    longestPath = path;
+                }
+            }
+        }
+    }
+
+    return longestPath;
+};
+
+let [nodes, edges] = getGraphData(100, 20);
+
+const longestPath = findLongestPath(nodes, edges);
 console.log("edges", edges);
+console.log("longestPath", longestPath);
+
+const markPath = (path, edges) => {
+    return edges.map((edge) => {
+        const isEdgeInPath = path.some((pathEdge) => pathEdge === edge);
+        if (isEdgeInPath) {
+            return { data: { ...edge.data, marked: true } };
+        }
+        return edge;
+    });
+};
+
+edges = markPath(longestPath, edges);
 
 const cy = cytoscape({
     container: document.getElementById("cy"),
@@ -101,16 +174,19 @@ const cy = cytoscape({
                 "text-outline-color": "black",
             },
         },
+        {
+            selector: "edge[?marked]",
+            style: {
+                "line-color": "#e8eacd",
+                width: 5,
+            },
+        },
     ],
     elements: {
         nodes,
         edges,
     },
-    layout: {
-        name: "breadthfirst",
-        directed: true,
-        padding: 10,
-        color: "#ffff00",
-        fit: true,
-    },
 });
+
+const layout = cy.makeLayout({ name: "spread", prelayout: false, padding: 20 });
+layout.run();

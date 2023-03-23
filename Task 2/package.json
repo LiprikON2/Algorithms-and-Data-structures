@@ -12,6 +12,7 @@
     "vite": "^4.2.0"
   },
   "dependencies": {
-    "cytoscape": "^3.23.0"
+    "cytoscape": "^3.23.0",
+    "cytoscape-spread": "^3.0.0"
   }
 }
