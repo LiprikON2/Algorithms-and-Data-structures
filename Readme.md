@@ -6,3 +6,4 @@
 
 ### Class Works
 - [Task 1](Task%201/main.js)
+- [Task 2](Task%202/Readme.md)
