@@ -53,8 +53,8 @@ console.log("edges", edges);
 
 const cy = cytoscape({
     container: document.getElementById("cy"),
-    minZoom: 0.9,
-    maxZoom: 5,
+    // maxZoom: 5,
+    // minZoom: 0.9,
     style: [
         {
             selector: "node",
