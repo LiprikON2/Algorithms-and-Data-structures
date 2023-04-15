@@ -2,7 +2,7 @@ import "../style.css";
 import Chart from "chart.js/auto";
 import _ from "lodash";
 
-const generateDataset = (fn, label = "", count = 7, step = 1) => {
+const generateDataset = (fn, label = "", count = 40, step = 1) => {
     const xAxis = _.range(0, count, step);
     const data = xAxis.map((x) => ({ x, y: fn(x) }));
 
@@ -33,6 +33,9 @@ const chart = new Chart(document.getElementById("chart"), {
             title: {
                 display: true,
                 text: "Function Time Complexity",
+                font: {
+                    size: "24px",
+                },
                 color: "#c9c9c9",
             },
         },
@@ -47,7 +50,7 @@ const chart = new Chart(document.getElementById("chart"), {
                     tickColor: "#616161",
                 },
                 title: {
-                    text: "n",
+                    text: "N",
                     display: true,
                     color: "#c9c9c9",
                     align: "start",
@@ -62,7 +65,7 @@ const chart = new Chart(document.getElementById("chart"), {
                     tickColor: "#616161",
                 },
                 title: {
-                    text: "f(n)",
+                    text: "f(N)",
                     display: true,
                     color: "#c9c9c9",
                     align: "start",

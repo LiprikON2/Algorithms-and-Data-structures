@@ -24,7 +24,7 @@ a:hover {
 }
 
 body {
-    padding-inline: 10rem;
+    padding-inline: 5vmax;
     /* margin: 0;
     display: flex;
     place-items: center;
