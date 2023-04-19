@@ -12,7 +12,6 @@ const bubbleSort = (arr) => {
                 arr[cursor + 1] = leftItem;
                 arr[cursor] = rightItem;
             }
-
             steps++;
         }
     }
@@ -20,11 +19,11 @@ const bubbleSort = (arr) => {
     return [arr, steps];
 };
 
-const unsortedArr = ["c", "b", "d", "z", "a"];
+const unsortedArr = [99, 92, 12, 21, 42, 1];
 
 const [sortedArr, steps] = bubbleSort(unsortedArr);
 
 console.log("unsortedArr", unsortedArr);
-console.log("sortedArr", sortedArr, `| O(bubble(${unsortedArr.length})) =`, steps);
+console.log("bubbleSortedArr", sortedArr, `| O(bubble(${unsortedArr.length})) =`, steps);
 
 export default bubbleSort;
