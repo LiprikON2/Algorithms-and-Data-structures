@@ -15,6 +15,7 @@ const unsortedArr = [99, 92, 12, 21, 42, 1];
 
 const [jsSortedArr, steps] = jsSort(unsortedArr);
 
+console.log("jsSort.js:");
 console.log("unsortedArr", unsortedArr);
 console.log("jsSortedArr", jsSortedArr, `| O(jsSort(${unsortedArr.length})) =`, steps);
 

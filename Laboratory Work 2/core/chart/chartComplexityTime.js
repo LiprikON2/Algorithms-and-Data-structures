@@ -21,7 +21,7 @@ const O_jsSort_time = (x) => {
     const shuffledArr = _.shuffle(unsortedArr);
 
     const t0 = performance.now();
-    const [sortedArr, steps] = jsSort(unsortedArr);
+    const [sortedArr, steps] = jsSort(shuffledArr);
     const t1 = performance.now();
 
     return (t1 - t0) / 1000;

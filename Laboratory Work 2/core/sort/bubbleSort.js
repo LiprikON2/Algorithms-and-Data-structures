@@ -23,6 +23,7 @@ const unsortedArr = [99, 92, 12, 21, 42, 1];
 
 const [sortedArr, steps] = bubbleSort(unsortedArr);
 
+console.log("bubbleSort.js:");
 console.log("unsortedArr", unsortedArr);
 console.log("bubbleSortedArr", sortedArr, `| O(bubble(${unsortedArr.length})) =`, steps);
 

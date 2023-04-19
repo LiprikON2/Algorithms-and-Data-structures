@@ -1,38 +1,36 @@
 import Chart from "chart.js/auto";
 import _ from "lodash";
 
-import bubbleSort from "../sort/bubbleSort";
-import jsSort from "../sort/jsSort";
+import countAlgorithm from "../algorithms/count";
 import { generateDataset } from "../utils";
 
-const O_1 = (x) => 1;
+const factorial = (n) => {
+    if (n < 0) return;
+    if (n < 2) return 1;
+    return n * factorial(n - 1);
+};
+
+const O_n = (x) => x;
+const O_nlogn = (x) => x * Math.log2(x);
+const O_n_fact = (x) => factorial(x);
+const O_n_3 = (x) => x ** 3;
 const O_logn = (x) => Math.log2(x);
-const O_n2 = (x) => x ** 2;
-const O_2n = (x) => 2 ** x;
-const O_bubble = (x) => {
-    const unsortedArr = _.range(x, 0, -1);
-    const shuffledArr = _.shuffle(unsortedArr);
 
-    const [sortedArr, steps] = bubbleSort(shuffledArr);
-    return steps;
-};
-const O_jsSort = (x) => {
-    const unsortedArr = _.range(x, 0, -1);
-    const shuffledArr = _.shuffle(unsortedArr);
+const O_countAlgorithm = (x) => {
+    const unsortedArr = _.range(0, x);
 
-    const [sortedArr, steps] = jsSort(shuffledArr);
-
+    const [valueCount, steps] = countAlgorithm(unsortedArr, 1);
     return steps;
 };
 
-const dataSteps = {
+const dataAlgorithms = {
     datasets: [
-        generateDataset(O_bubble, "O(bubble(N))"),
-        generateDataset(O_jsSort, "O(jsSort(N))"),
-        generateDataset(O_1, "O(1)"),
-        generateDataset(O_logn, "O(log N)"),
-        generateDataset(O_n2, "O(N²)"),
-        generateDataset(O_2n, "O(2ⁿ)"),
+        generateDataset(O_n, "O(N)"),
+        generateDataset(O_nlogn, "O(N logN)"),
+        generateDataset(O_n_fact, "O(N!)"),
+        generateDataset(O_n_3, "O(N³)"),
+        generateDataset(O_logn, "O(logN)"),
+        generateDataset(O_countAlgorithm, "O(count(N))", 101, 1, { borderWidth: 6 }),
     ],
 };
 
@@ -41,7 +39,7 @@ const aspectRatio = 3 / 2;
 const xMax = 40 * stepSize;
 const yMax = Math.round(xMax / aspectRatio);
 
-const optionsSteps = {
+const optionsAlgorithms = {
     plugins: {
         title: {
             display: true,
@@ -93,12 +91,12 @@ const optionsSteps = {
     },
 };
 
-const chartSteps = (dataset) => {
-    return new Chart(document.getElementById("chart1"), {
+const chartAlgorithms = (dataset) => {
+    return new Chart(document.getElementById("chart3"), {
         type: "scatter",
-        data: dataSteps,
-        options: optionsSteps,
+        data: dataAlgorithms,
+        options: optionsAlgorithms,
     });
 };
 
-export default chartSteps;
+export default chartAlgorithms;
