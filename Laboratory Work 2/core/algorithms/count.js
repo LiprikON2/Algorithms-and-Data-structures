@@ -12,7 +12,7 @@ const count = (arr, value) => {
 
 const array = ["yes", "no", "maybe", "no", "yes", "why", "nope", "yes"];
 
-console.log("count.js:");
+console.log("\ncount.js:");
 console.log("array", array);
 const toCount = "yes";
 

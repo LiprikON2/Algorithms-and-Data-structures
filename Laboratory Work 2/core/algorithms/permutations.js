@@ -23,7 +23,7 @@ const permutations = (arr) => {
 
 const array = ["dog", "ate", "cat", "what"];
 
-console.log("combinations.js:");
+console.log("\ncombinations.js:");
 console.log("array", array);
 const [permutationsOfArray, steps] = permutations(array);
 console.log(

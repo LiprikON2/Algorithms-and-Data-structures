@@ -45,6 +45,12 @@ const O_count3dAlgorithm = (x) => {
     const [valueCount, steps] = count3dAlgorithm(unsortedArr, 1);
     return steps;
 };
+const O_mergeSortAlgorithm = (x) => {
+    const unsortedArr = _.range(x, 0, -1);
+
+    const [sortedArr, steps] = mergeSortAlgorithm(unsortedArr, 1);
+    return steps;
+};
 
 const dataAlgorithms = {
     datasets: [
@@ -57,10 +63,11 @@ const dataAlgorithms = {
         generateDataset(O_permutationsAlgorithm, "O(permutations(N))", 8, 1, { borderWidth: 6 }),
         generateDataset(O_binarySearchAlgorithm, "O(binarySearch(N))", 101, 1, { borderWidth: 6 }),
         generateDataset(O_count3dAlgorithm, "O(count3d(N))", 101, 1, { borderWidth: 6 }),
+        generateDataset(O_mergeSortAlgorithm, "O(mergeSort(N))", 101, 1, { borderWidth: 6 }),
     ],
 };
 
-const stepSize = 1;
+const stepSize = 10;
 const aspectRatio = 3 / 2;
 const xMax = 40 * stepSize;
 const yMax = Math.round(xMax / aspectRatio);

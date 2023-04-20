@@ -9,52 +9,40 @@ const halveArray = (array) => {
 };
 
 const mergeSort = (arr, steps = 1) => {
-    console.log("arr", arr.length);
-    if (arr.length < 2) return [arr, steps];
-    if (arr.length == 2) {
-        console.log("2!");
-        const leftItem = arr[0];
-        const rightItem = arr[1];
-
-        if (leftItem > rightItem) {
-            arr[0] = rightItem;
-            arr[1] = leftItem;
+    const merge = (a, b, steps) => {
+        const arr = [];
+        while (a.length > 0 && b.length > 0) {
+            const aFirst = a[0];
+            const bFirst = b[0];
+            if (aFirst < bFirst) {
+                a.shift();
+                arr.push(aFirst);
+            } else {
+                b.shift();
+                arr.push(bFirst);
+            }
+            steps++;
         }
-        return [arr, steps];
-    }
-    const [a, b] = halveArray(arr);
-    const [aSorted, aSteps] = mergeSort(a, steps);
-    const [bSorted, bSteps] = mergeSort(b, aSteps);
-    const result = [...aSorted, ...bSorted].flat();
 
-    return [result, bSteps];
+        const result = [...arr, ...a, ...b];
+        return [result, steps];
+    };
+
+    if (arr.length < 2) return [arr, steps];
+
+    const [leftHalf, rightHalf] = halveArray(arr);
+    const [leftSorted, leftSteps] = mergeSort(leftHalf, steps + 1);
+    const [rightSorted, rightSteps] = mergeSort(rightHalf, leftSteps + 1);
+
+    return merge(leftSorted, rightSorted, rightSteps);
 };
 
-const mm = (arr) => {
-    let prevSorted = arr;
-    let prevSteps = 1;
-    let sorted;
-    let steps;
-    do {
-        const ss = mergeSort(prevSorted.slice(), prevSteps);
-        sorted = ss[0];
-        steps = ss[1];
+const array = [2, 3, 4, 1];
 
-        prevSorted = sorted;
-        prevSteps = steps;
-        console.log("prevSorted !== sorted", prevSorted, sorted);
-    } while (prevSorted !== sorted);
-
-    return [sorted, steps];
-};
-
-// const array = ["yes", "no", "maybe", "no", "yes", "why", "nope", "yes", "hmm"];
-const array = [4, 1, 2, 3];
-
-console.log("mergeSort.js:");
+console.log("\nmergeSort.js:");
 console.log("array", array);
 
-const [sortedArray, steps] = mm(array.slice());
+const [sortedArray, steps] = mergeSort(array.slice());
 console.log("sortedArray", sortedArray, `| O(count(${array.length})) =`, steps);
 
 export default mergeSort;

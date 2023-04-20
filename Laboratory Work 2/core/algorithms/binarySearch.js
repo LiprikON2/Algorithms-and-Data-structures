@@ -43,7 +43,7 @@ const sortedArray = [1, 3, 5, 6, 8, 9, 10, 12, 14, 16, 17];
 
 const [targetIndex, recCount] = binarySearch(sortedArray, 17);
 
-console.log("binarySearch.js:");
+console.log("\nbinarySearch.js:");
 console.log("sortedArray", sortedArray, "item", 17);
 console.log("targetIndex", targetIndex, `| O(permutations(${sortedArray.length})) =`, recCount);
 

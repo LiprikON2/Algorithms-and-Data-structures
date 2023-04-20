@@ -27,7 +27,7 @@ const array = [
     ],
 ];
 
-console.log("count3d.js:");
+console.log("\ncount3d.js:");
 console.log("array", array);
 const toCount = "yes";
 
