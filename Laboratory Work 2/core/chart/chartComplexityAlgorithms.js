@@ -67,12 +67,12 @@ const dataAlgorithms = {
     ],
 };
 
-const stepSize = 10;
+const stepSize = 1;
 const aspectRatio = 3 / 2;
-const xMax = 40 * stepSize;
-const yMax = Math.round(xMax / aspectRatio);
-// const xMax = 20;
-// const yMax = 5000;
+// const xMax = 40 * stepSize;
+// const yMax = Math.round(xMax / aspectRatio);
+const xMax = 20;
+const yMax = 5000;
 
 const optionsAlgorithms = {
     plugins: {

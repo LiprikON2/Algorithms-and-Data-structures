@@ -81,3 +81,30 @@ $O(3n) = O(n)$
 $O(3\log n) = O(\log n)$
 
 Так как у них одинаковая скорость роста
+
+### $O(n)$
+
+Count item in 1d array
+
+![](https://i.imgur.com/d1SXaxv.png)
+### $O(\log n)$
+
+Binary search
+
+![](https://i.imgur.com/bzoUiVm.png)
+
+### $O(n!)$
+
+Permutations
+
+![](https://i.imgur.com/7LrFok2.png)
+
+- Строго говоря, здесь не $O(n!)$ (худший случай), a $\Omega(n!)$ (лучший случай), т.к. у n-массива всегда $n!$ перестановок
+
+### $O(n^3)$
+
+Count item in 3d array
+
+![](https://i.imgur.com/5BtdD3G.png)
+
+### $O(\log n)$
