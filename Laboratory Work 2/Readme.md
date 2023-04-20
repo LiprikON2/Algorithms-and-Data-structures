@@ -87,11 +87,11 @@ $O(3\log n) = O(\log n)$
 Count item in 1d array
 
 ![](https://i.imgur.com/d1SXaxv.png)
-### $O(\log n)$
+### $O(n \log n)$
 
-Binary search
+Merge Sort
 
-![](https://i.imgur.com/bzoUiVm.png)
+![](https://i.imgur.com/RG9dIne.png)
 
 ### $O(n!)$
 
@@ -108,3 +108,7 @@ Count item in 3d array
 ![](https://i.imgur.com/5BtdD3G.png)
 
 ### $O(\log n)$
+
+Binary search
+
+![](https://i.imgur.com/bzoUiVm.png)

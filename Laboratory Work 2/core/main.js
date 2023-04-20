@@ -6,5 +6,4 @@ import chartAlgorithms from "./chart/chartComplexityAlgorithms";
 
 chartSteps();
 chartTime();
-
 chartAlgorithms();
