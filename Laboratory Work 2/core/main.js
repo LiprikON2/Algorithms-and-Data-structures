@@ -1,10 +1,10 @@
 import "../style.css";
 
-// import chartSteps from "./chart/chartComplexitySteps";
-// import chartTime from "./chart/chartComplexityTime";
+import chartSteps from "./chart/chartComplexitySteps";
+import chartTime from "./chart/chartComplexityTime";
 import chartAlgorithms from "./chart/chartComplexityAlgorithms";
 
-// chartSteps();
-// chartTime();
+chartSteps();
+chartTime();
 
 chartAlgorithms();
