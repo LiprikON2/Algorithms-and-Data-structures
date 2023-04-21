@@ -1,5 +1,6 @@
 const bubbleSort = (arr, compareFn) => {
     let steps = 0;
+    const t0 = performance.now();
 
     for (let iteration = 0; iteration < arr.length; iteration++) {
         for (let cursor = 0; cursor < arr.length - 1; cursor++) {
@@ -13,8 +14,10 @@ const bubbleSort = (arr, compareFn) => {
             steps++;
         }
     }
+    const t1 = performance.now();
 
-    return [arr, steps];
+    const time = (t1 - t0) / 1000;
+    return [arr, steps, time];
 };
 
 // const unsortedArr = [99, 92, 12, 21, 42, 1];
