@@ -1,4 +1,4 @@
-const combSort = (arr, compareFn) => {
+const heapSort = (arr, compareFn) => {
     let steps = 0;
     const t0 = performance.now();
 
@@ -7,4 +7,4 @@ const combSort = (arr, compareFn) => {
     return [arr, steps, time];
 };
 
-export default combSort;
+export default heapSort;

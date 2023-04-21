@@ -1,16 +1,34 @@
 import defaultCompareFn from "./defaultCompareFn";
-import { bubbleSort } from "../sortingAlgorithms";
+import { bubbleSort, combSort, insertionSort, mergeSort, quickSort } from "../sortingAlgorithms";
 
 class SortableList extends Array {
     sortSteps = null;
     sortTime = null;
 
-    bubbleSort(compareFn) {
+    customSort(sortFn, compareFn) {
+        if (!sortFn) return this.sort(compareFn);
         if (!compareFn) compareFn = defaultCompareFn;
-        const [sorted, steps, time] = bubbleSort(this, compareFn);
+
+        const [sorted, steps, time] = sortFn(this, compareFn);
         this.sortSteps = steps;
         this.sortTime = time;
         return sorted;
+    }
+
+    bubbleSort(compareFn) {
+        return this.customSort(bubbleSort, compareFn);
+    }
+    combSort(compareFn) {
+        return this.customSort(combSort, compareFn);
+    }
+    insertionSort(compareFn) {
+        return this.customSort(insertionSort, compareFn);
+    }
+    mergeSort(compareFn) {
+        return this.customSort(mergeSort, compareFn);
+    }
+    quickSort(compareFn) {
+        return this.customSort(quickSort, compareFn);
     }
 }
 
