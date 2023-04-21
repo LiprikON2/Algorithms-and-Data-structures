@@ -1,4 +1,4 @@
-# Laboratory Work 1
+# Laboratory Work 2
 > K33401 - Рейнгеверц В.А.
 
 
