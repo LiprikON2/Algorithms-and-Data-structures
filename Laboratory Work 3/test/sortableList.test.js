@@ -86,7 +86,7 @@ describe("SortableList", () => {
         describe("Custom sorting", () => {
             describe("Implementation of BubbleSort inplace", () => customSortTest("bubbleSort"));
             // describe("Implementation of BucketSort inplace", () => customSortTest("bucketSort"));
-            // describe("Implementation of CombSort inplace", () => customSortTest("combSort"));
+            describe("Implementation of CombSort inplace", () => customSortTest("combSort"));
             // describe("Implementation of HeapSort inplace", () => customSortTest("heapSort"));
             describe("Implementation of InsertionSort inplace", () =>
                 customSortTest("insertionSort"));

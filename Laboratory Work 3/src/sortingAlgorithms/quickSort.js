@@ -3,7 +3,7 @@
     - First part: smaller than the pivot
     - Second part: greater than the pivot
 */
-const partition = (arr, compareFn, startIndex, endIndex) => {
+const partition = (arr, compareFn, stepsCounter, startIndex, endIndex) => {
     const pivot = arr[endIndex];
     let partitionIndex = startIndex;
 
@@ -14,6 +14,7 @@ const partition = (arr, compareFn, startIndex, endIndex) => {
             [arr[itemIndex], arr[partitionIndex]] = [arr[partitionIndex], arr[itemIndex]];
 
             partitionIndex++;
+            stepsCounter.count++;
         }
     }
 
@@ -23,28 +24,28 @@ const partition = (arr, compareFn, startIndex, endIndex) => {
     return pivotIndex;
 };
 
-const recQuickSort = (arr, compareFn, startIndex = 0, endIndex = arr.length - 1) => {
+const recQuickSort = (arr, compareFn, stepsCounter, startIndex = 0, endIndex = arr.length - 1) => {
     if (startIndex >= endIndex) return;
 
-    const pivotIndex = partition(arr, compareFn, startIndex, endIndex);
+    const pivotIndex = partition(arr, compareFn, stepsCounter, startIndex, endIndex);
 
     // Sorts first part of the array (excluding pivot itself)
-    recQuickSort(arr, compareFn, startIndex, pivotIndex - 1);
+    recQuickSort(arr, compareFn, stepsCounter, startIndex, pivotIndex - 1);
     // Sorts second part of the array (excluding pivot itself)
-    recQuickSort(arr, compareFn, pivotIndex + 1, endIndex);
+    recQuickSort(arr, compareFn, stepsCounter, pivotIndex + 1, endIndex);
 
     return arr;
 };
 
 const quickSort = (arr, compareFn) => {
-    let steps = 0;
+    let stepsCounter = { count: 0 };
     const t0 = performance.now();
 
-    recQuickSort(arr, compareFn);
+    recQuickSort(arr, compareFn, stepsCounter);
 
     const t1 = performance.now();
     const time = (t1 - t0) / 1000;
-    return [arr, steps, time];
+    return [arr, stepsCounter.count, time];
 };
 
 export default quickSort;

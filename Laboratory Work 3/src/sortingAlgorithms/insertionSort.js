@@ -9,6 +9,7 @@ const insertionSort = (arr, compareFn) => {
         while (prevItemIndex > -1 && compareFn(item, arr[prevItemIndex]) < 0) {
             arr[prevItemIndex + 1] = arr[prevItemIndex];
             prevItemIndex--;
+            steps++;
         }
         arr[prevItemIndex + 1] = item;
     }
