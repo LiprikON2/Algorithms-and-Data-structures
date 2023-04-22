@@ -15,14 +15,7 @@ const customSortTest = (sortingAlgorithmName) => {
     expect(sortedSortableReference).toStrictEqual(sortedList);
     expect(sortedSortableReference).not.toStrictEqual(unsortedList);
 
-    it("Has step field", () => {
-        expect(sortableList.sortSteps).toBeTypeOf("number");
-    });
-    it("Has time field", () => {
-        expect(sortableList.sortTime).toBeTypeOf("number");
-    });
-
-    it("Accepts compareFn", () => {
+    it("Accepts compareFn as an argument", () => {
         const descendingOrderFn = (a, b) => b - a;
 
         const sortedSortableList = sortableList[sortingAlgorithmName](descendingOrderFn);
@@ -31,6 +24,13 @@ const customSortTest = (sortingAlgorithmName) => {
         const sortedList = unsortedList.slice().sort(descendingOrderFn);
         expect(sortedSortable).toStrictEqual(sortedList);
         expect(sortedSortable).not.toStrictEqual(unsortedList);
+    });
+
+    it("Has .sortSteps", () => {
+        expect(sortableList.sortSteps).toBeTypeOf("number");
+    });
+    it("Has .sortTime", () => {
+        expect(sortableList.sortTime).toBeTypeOf("number");
     });
 };
 
@@ -59,7 +59,7 @@ describe("SortableList", () => {
         });
     });
     describe("Sorting", () => {
-        describe("Implementation of Array.sort inplace", () => {
+        describe("Implementation of Array.sort() inplace", () => {
             const unsortedList = [-10, 20, 1, 2, 0, 2, 2, 3];
             const sortableList = new SortableList(...unsortedList);
 
@@ -73,25 +73,23 @@ describe("SortableList", () => {
             expect(sortedSortableReference).toStrictEqual(sortedList);
             expect(sortedSortableReference).not.toStrictEqual(unsortedList);
 
-            it("Has null step field", () => {
+            it("Has null .sortSteps", () => {
                 expect(sortableList.sortSteps).toBeNull();
                 expect(sortableList.slice().sortSteps).toBeNull();
             });
-            it("Has null time field", () => {
+            it("Has null .sortTime", () => {
                 expect(sortableList.sortTime).toBeNull();
                 expect(sortableList.slice().sortTime).toBeNull();
             });
         });
-
-        describe("Custom sorting", () => {
-            describe("Implementation of BubbleSort inplace", () => customSortTest("bubbleSort"));
-            // describe("Implementation of BucketSort inplace", () => customSortTest("bucketSort"));
-            describe("Implementation of CombSort inplace", () => customSortTest("combSort"));
-            // describe("Implementation of HeapSort inplace", () => customSortTest("heapSort"));
-            describe("Implementation of InsertionSort inplace", () =>
-                customSortTest("insertionSort"));
-            // describe("Implementation of MergeSort inplace", () => customSortTest("mergeSort"));
-            describe("Implementation of QuickSort inplace", () => customSortTest("quickSort"));
-        });
+    });
+    describe("Custom sorting algorithms", () => {
+        describe("Implementation of BubbleSort inplace", () => customSortTest("bubbleSort"));
+        // describe("Implementation of BucketSort inplace", () => customSortTest("bucketSort"));
+        describe("Implementation of CombSort inplace", () => customSortTest("combSort"));
+        // describe("Implementation of HeapSort inplace", () => customSortTest("heapSort"));
+        describe("Implementation of InsertionSort inplace", () => customSortTest("insertionSort"));
+        // describe("Implementation of MergeSort inplace", () => customSortTest("mergeSort"));
+        describe("Implementation of QuickSort inplace", () => customSortTest("quickSort"));
     });
 });

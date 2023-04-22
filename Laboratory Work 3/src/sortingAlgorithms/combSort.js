@@ -13,7 +13,7 @@ const combSort = (arr, compareFn) => {
             sorted = true;
             gap = 1;
         }
-        // When gap is 1, behaves like BubbleSort
+        // When gap equals to 1, behaves like BubbleSort
         for (let cursor = 0; cursor < arr.length - gap; cursor++) {
             const smallItemIndex = gap + cursor;
             if (compareFn(arr[cursor], arr[smallItemIndex]) > 0) {
