@@ -1,20 +1,25 @@
 import { assert, expect, describe, it } from "vitest";
 import SortableList from "../src/sortableList/index.js";
 
-const customSortTest = (list, listCopy, sortedSortableList) => {
-    const sortedSortableItems = Array.from(sortedSortableList);
-    const sortedListItems = list.sort();
-    expect(sortedSortableItems).toStrictEqual(sortedListItems);
-    expect(sortedSortableItems).toStrictEqual(list);
-    expect(sortedSortableItems).not.toStrictEqual(listCopy);
+const customSortTest = (sortingAlgorithmName) => {
+    const unsortedList = [-10, 20, 1, 2, 0, 2, 2, 3];
+    const sortableList = new SortableList(...unsortedList);
 
-    it("Records steps", () => {
-        expect(sortedSortableList.sortSteps).toBeTypeOf("number");
-        expect(sortedSortableList.slice().sortSteps).toBeTypeOf("number");
+    const sortedSortableList = sortableList[sortingAlgorithmName]();
+
+    const sortedSortableReference = Array.from(sortableList);
+    const sortedSortableCopy = Array.from(sortedSortableList);
+    const sortedList = unsortedList.slice().sort();
+
+    expect(sortedSortableReference).toStrictEqual(sortedSortableCopy);
+    expect(sortedSortableReference).toStrictEqual(sortedList);
+    expect(sortedSortableReference).not.toStrictEqual(unsortedList);
+
+    it("Has step field", () => {
+        expect(sortableList.sortSteps).toBeTypeOf("number");
     });
-    it("Records time", () => {
-        expect(sortedSortableList.sortTime).toBeTypeOf("number");
-        expect(sortedSortableList.slice().sortTime).toBeTypeOf("number");
+    it("Has time field", () => {
+        expect(sortableList.sortTime).toBeTypeOf("number");
     });
 };
 
@@ -35,38 +40,47 @@ describe("SortableList", () => {
         it("Has iterator like an Array", () => {
             const sortableListIterator = sortableList[Symbol.iterator]();
             const listIterator = list[Symbol.iterator]();
+            expect(sortableListIterator.value).toBe(listIterator.value);
             expect(sortableListIterator.next().value).toBe(listIterator.next().value);
-        });
-
-        it("Has step field", () => {
-            expect(sortableList.sortSteps).toBeNull();
-            expect(sortableList.slice().sortSteps).toBeNull();
-        });
-        it("Has time field", () => {
-            expect(sortableList.sortTime).toBeNull();
-            expect(sortableList.slice().sortTime).toBeNull();
+            expect(sortableListIterator.next().value).toBe(listIterator.next().value);
+            expect(sortableListIterator.next().value).toBe(listIterator.next().value);
+            expect(sortableListIterator.next().value).toBe(listIterator.next().value);
         });
     });
     describe("Sorting", () => {
-        const list = [-10, 20, 1, 2, 0, 2, 2, 3];
-        const listCopy = list.slice();
-        const sortableList = new SortableList(...list);
+        describe("Implementation of Array.sort inplace", () => {
+            const unsortedList = [-10, 20, 1, 2, 0, 2, 2, 3];
+            const sortableList = new SortableList(...unsortedList);
 
-        it("Implements Array.sort inplace", () => {
-            const sortedSortableItems = Array.from(sortableList.sort());
-            const sortedListItems = list.sort();
-            expect(sortedSortableItems).toStrictEqual(sortedListItems);
-            expect(sortedSortableItems).toStrictEqual(list);
-            expect(sortedSortableItems).not.toStrictEqual(listCopy);
+            const sortedSortableList = sortableList.sort();
+
+            const sortedSortableReference = Array.from(sortableList);
+            const sortedSortableCopy = Array.from(sortedSortableList);
+            const sortedList = unsortedList.slice().sort();
+
+            expect(sortedSortableReference).toStrictEqual(sortedSortableCopy);
+            expect(sortedSortableReference).toStrictEqual(sortedList);
+            expect(sortedSortableReference).not.toStrictEqual(unsortedList);
+
+            it("Has null step field", () => {
+                expect(sortableList.sortSteps).toBeNull();
+                expect(sortableList.slice().sortSteps).toBeNull();
+            });
+            it("Has null time field", () => {
+                expect(sortableList.sortTime).toBeNull();
+                expect(sortableList.slice().sortTime).toBeNull();
+            });
         });
 
         describe("Custom sorting", () => {
-            it("Implements BubbleSort inplace", () =>
-                customSortTest(list, listCopy, sortableList.bubbleSort()));
-            it("Implements BucketSort inplace", () =>
-                customSortTest(list, listCopy, sortableList.bucketSort()));
-            it("Implements CombSort inplace", () =>
-                customSortTest(list, listCopy, sortableList.combSort()));
+            describe("Implementation of BubbleSort inplace", () => customSortTest("bubbleSort"));
+            // describe("Implementation of BucketSort inplace", () => customSortTest("bucketSort"));
+            // describe("Implementation of CombSort inplace", () => customSortTest("combSort"));
+            // describe("Implementation of HeapSort inplace", () => customSortTest("heapSort"));
+            describe("Implementation of InsertionSort inplace", () =>
+                customSortTest("insertionSort"));
+            // describe("Implementation of MergeSort inplace", () => customSortTest("mergeSort"));
+            describe("Implementation of QuickSort inplace", () => customSortTest("quickSort"));
         });
     });
 });

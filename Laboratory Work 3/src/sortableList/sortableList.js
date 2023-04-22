@@ -18,6 +18,8 @@ class SortableList extends Array {
         if (!compareFn) compareFn = defaultCompareFn;
 
         const [sorted, steps, time] = sortFn(this, compareFn);
+
+        // TODO: Slice or spread doesn't copy these the values
         this.sortSteps = steps;
         this.sortTime = time;
         return sorted;
@@ -45,10 +47,5 @@ class SortableList extends Array {
         return this.customSort(quickSort, compareFn);
     }
 }
-
-const s = new SortableList(3, 2, 1);
-console.log("s", s);
-const ss = s.slice().bubbleSort();
-console.log("s", s, "ss", ss);
 
 export default SortableList;
