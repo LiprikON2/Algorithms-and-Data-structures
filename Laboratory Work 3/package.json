@@ -10,5 +10,8 @@
     },
     "devDependencies": {
         "vite": "^4.3.0"
+    },
+    "dependencies": {
+        "mocha": "^10.2.0"
     }
 }
