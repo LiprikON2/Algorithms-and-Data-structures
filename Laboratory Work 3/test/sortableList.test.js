@@ -21,6 +21,17 @@ const customSortTest = (sortingAlgorithmName) => {
     it("Has time field", () => {
         expect(sortableList.sortTime).toBeTypeOf("number");
     });
+
+    it("Accepts compareFn", () => {
+        const descendingOrderFn = (a, b) => b - a;
+
+        const sortedSortableList = sortableList[sortingAlgorithmName](descendingOrderFn);
+
+        const sortedSortable = Array.from(sortedSortableList);
+        const sortedList = unsortedList.slice().sort(descendingOrderFn);
+        expect(sortedSortable).toStrictEqual(sortedList);
+        expect(sortedSortable).not.toStrictEqual(unsortedList);
+    });
 };
 
 describe("SortableList", () => {
