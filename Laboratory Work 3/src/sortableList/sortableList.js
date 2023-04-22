@@ -1,5 +1,13 @@
 import defaultCompareFn from "./defaultCompareFn";
-import { bubbleSort, combSort, insertionSort, mergeSort, quickSort } from "../sortingAlgorithms";
+import {
+    bubbleSort,
+    bucketSort,
+    combSort,
+    heapSort,
+    insertionSort,
+    mergeSort,
+    quickSort,
+} from "../sortingAlgorithms";
 
 class SortableList extends Array {
     sortSteps = null;
@@ -18,8 +26,14 @@ class SortableList extends Array {
     bubbleSort(compareFn) {
         return this.customSort(bubbleSort, compareFn);
     }
+    bucketSort(compareFn) {
+        return this.customSort(bucketSort, compareFn);
+    }
     combSort(compareFn) {
         return this.customSort(combSort, compareFn);
+    }
+    heapSort(compareFn) {
+        return this.customSort(heapSort, compareFn);
     }
     insertionSort(compareFn) {
         return this.customSort(insertionSort, compareFn);
@@ -32,9 +46,9 @@ class SortableList extends Array {
     }
 }
 
-// const s = new SortableList(3, 2, 1);
-// console.log("s", s);
-// const ss = s.slice().bubbleSort();
-// console.log("s", s, "ss", ss);
+const s = new SortableList(3, 2, 1);
+console.log("s", s);
+const ss = s.slice().bubbleSort();
+console.log("s", s, "ss", ss);
 
 export default SortableList;
