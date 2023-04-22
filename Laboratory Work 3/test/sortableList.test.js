@@ -11,6 +11,7 @@ const customSortTest = (sortingAlgorithmName) => {
     const sortedSortableCopy = Array.from(sortedSortableList);
     const sortedList = unsortedList.slice().sort();
 
+    expect(sortedSortableReference.length).toBe(sortedList.length);
     expect(sortedSortableReference).toStrictEqual(sortedSortableCopy);
     expect(sortedSortableReference).toStrictEqual(sortedList);
     expect(sortedSortableReference).not.toStrictEqual(unsortedList);
@@ -85,7 +86,25 @@ describe("SortableList", () => {
     });
     describe("Custom sorting algorithms", () => {
         describe("Implementation of BubbleSort inplace", () => customSortTest("bubbleSort"));
-        describe("Implementation of BucketSort inplace", () => customSortTest("bucketSort"));
+        describe("Implementation of BucketSort", () => {
+            const unsortedList = [-10, 20, 1, 2, 0, 2, 2, 3];
+            const sortableList = new SortableList(...unsortedList);
+
+            const sortedSortableList = sortableList.bucketSort();
+
+            const sortedSortable = Array.from(sortedSortableList);
+            const sortedList = unsortedList.slice().sort((a, b) => a - b);
+
+            expect(sortedSortable).toStrictEqual(sortedList);
+            expect(sortedSortable).not.toStrictEqual(unsortedList);
+
+            it("Has .sortSteps", () => {
+                expect(sortableList.sortSteps).toBeTypeOf("number");
+            });
+            it("Has .sortTime", () => {
+                expect(sortableList.sortTime).toBeTypeOf("number");
+            });
+        });
         describe("Implementation of CombSort inplace", () => customSortTest("combSort"));
         // describe("Implementation of HeapSort inplace", () => customSortTest("heapSort"));
         describe("Implementation of InsertionSort inplace", () => customSortTest("insertionSort"));

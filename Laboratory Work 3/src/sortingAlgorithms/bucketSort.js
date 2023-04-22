@@ -27,14 +27,15 @@ const _bucketSort = (arr, compareFn, stepsCounter, k = 5) => {
 
     // Assign buckets to the elements
     arr.forEach((item) => {
-        buckets.forEach((bucket) => {
+        for (let bucket of buckets) {
             stepsCounter.count++;
 
+            if (isNaN(item)) throw new Error("All list items must have numerical value.");
             if (item >= bucket.bucketStart && item <= bucket.bucketEnd) {
                 bucket.push(item);
                 return;
             }
-        });
+        }
     });
 
     buckets.forEach((bucket) => {
@@ -45,13 +46,17 @@ const _bucketSort = (arr, compareFn, stepsCounter, k = 5) => {
     return buckets.flat();
 };
 
-/* Note: supports only lists of numerical values */
+/* 
+    Note: 
+    - Supports only lists of numerical values
+    - Does not sort inplace
+*/
 const bucketSort = (arr, compareFn) => {
     let stepsCounter = { count: 0 };
     const t0 = performance.now();
 
     const sortedArr = _bucketSort(arr, compareFn, stepsCounter);
-    console.log("WRF", arr);
+
     const t1 = performance.now();
     const time = (t1 - t0) / 1000;
     return [sortedArr, stepsCounter.count, time];

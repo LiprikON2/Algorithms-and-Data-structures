@@ -7,7 +7,6 @@
         "dev": "vite",
         "build": "vite build",
         "test": "vitest --reporter=verbose",
-        "test2": "vitest ttt",
         "coverage": "vitest run --coverage"
     },
     "devDependencies": {
