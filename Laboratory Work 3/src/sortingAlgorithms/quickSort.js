@@ -19,9 +19,8 @@ const partition = (arr, compareFn, stepsCounter, startIndex, endIndex) => {
     }
 
     // Final step: swap pivot
-    const pivotIndex = partitionIndex;
-    [arr[endIndex], arr[pivotIndex]] = [arr[pivotIndex], arr[endIndex]];
-    return pivotIndex;
+    [arr[endIndex], arr[partitionIndex]] = [arr[partitionIndex], arr[endIndex]];
+    return partitionIndex;
 };
 
 const recQuickSort = (arr, compareFn, stepsCounter, startIndex = 0, endIndex = arr.length - 1) => {

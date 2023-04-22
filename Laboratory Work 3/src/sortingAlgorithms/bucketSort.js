@@ -1,6 +1,6 @@
 import insertionSort from "./insertionSort";
 
-const _bucketSort = (arr, compareFn, stepsCounter, k = 5) => {
+const _bucketSort = (arr, stepsCounter, k = 5) => {
     // Init list of empty buckets
     const buckets = Array(k)
         .fill()
@@ -51,11 +51,11 @@ const _bucketSort = (arr, compareFn, stepsCounter, k = 5) => {
     - Supports only lists of numerical values
     - Does not sort inplace
 */
-const bucketSort = (arr, compareFn) => {
+const bucketSort = (arr) => {
     let stepsCounter = { count: 0 };
     const t0 = performance.now();
 
-    const sortedArr = _bucketSort(arr, compareFn, stepsCounter);
+    const sortedArr = _bucketSort(arr, stepsCounter);
 
     const t1 = performance.now();
     const time = (t1 - t0) / 1000;
