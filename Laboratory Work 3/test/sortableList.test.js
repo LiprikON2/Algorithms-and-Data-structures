@@ -4,6 +4,8 @@ import SortableList from "../src/sortableList/index.js";
 const customSortTest = (sortingAlgorithmName) => {
     const unsortedList = [-10, 20, 1, 2, 0, 2, 2, 3];
     const sortableList = new SortableList(...unsortedList);
+    const sortableList2 = SortableList.from(unsortedList);
+    expect(sortableList).toStrictEqual(sortableList2);
 
     const sortedSortableList = sortableList[sortingAlgorithmName]();
 
