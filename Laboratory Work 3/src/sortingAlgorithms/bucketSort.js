@@ -5,7 +5,6 @@ const _bucketSort = (arr, stepsCounter, k = 5) => {
     const buckets = Array(k)
         .fill()
         .map(() => []);
-    stepsCounter.count += k;
 
     const min = Math.min(...arr);
     const max = Math.max(...arr);
