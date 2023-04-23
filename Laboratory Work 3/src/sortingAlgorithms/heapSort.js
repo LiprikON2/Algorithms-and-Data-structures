@@ -19,28 +19,28 @@ const getItemParent = (arr, childIndex) => {
     return [parentIndex, parent];
 };
 
-/* 
-    Min heap:
-    - Parent is always smaller than children
-*/
-const insertItem = (arr, item) => {
-    arr.push(item);
-    const nextItemIndex = arr.length - 1;
+// /*
+//     Min heap:
+//     - Parent is always smaller than children
+// */
+// const insertItem = (arr, item) => {
+//     arr.push(item);
+//     const nextItemIndex = arr.length - 1;
 
-    recSiftUp(arr, nextItemIndex);
-};
+//     recSiftUp(arr, nextItemIndex);
+// };
 
-/* Sifts item up, until heap property is preserved */
-const recSiftUp = (arr, itemIndex) => {
-    const item = arr[itemIndex];
-    const [parentIndex, parent] = getItemParent(arr, itemIndex);
-    const isMaxHeapPropertyPreserved = parent === null || parent >= item;
+// /* Sifts item up, until heap property is preserved */
+// const recSiftUp = (arr, itemIndex) => {
+//     const item = arr[itemIndex];
+//     const [parentIndex, parent] = getItemParent(arr, itemIndex);
+//     const isMaxHeapPropertyPreserved = parent === null || parent >= item;
 
-    if (!isMaxHeapPropertyPreserved) {
-        [arr[itemIndex], arr[parentIndex]] = [arr[parentIndex], arr[itemIndex]];
-        recSiftUp(arr, parentIndex);
-    }
-};
+//     if (!isMaxHeapPropertyPreserved) {
+//         [arr[itemIndex], arr[parentIndex]] = [arr[parentIndex], arr[itemIndex]];
+//         recSiftUp(arr, parentIndex);
+//     }
+// };
 
 /* Checks if every item respects max heap property */
 const isHeapified = (arr) => {
@@ -51,34 +51,47 @@ const isHeapified = (arr) => {
     });
 };
 
-/* Iterate top-to-bottom and make array items respect max heap property */
+/*
+    Floyd's heap construction algorithm:
+    - Iterates top-to-bottom and makes array items 
+      respect max heap property by sifting down
+    - Starts from middle point of the array
+    - O(n) complexity
+*/
 const heapify = (arr) => {
-    for (let midItemIndex = Math.floor(arr.length / 2) - 1; midItemIndex >= 0; midItemIndex--) {
-        siftDown(arr, midItemIndex, arr.length - 1);
+    const arrayMidPoint = Math.floor(arr.length / 2) - 1;
+
+    for (let start = arrayMidPoint; start >= 0; start--) {
+        siftDown(arr, start, arr.length - 1);
     }
 };
 
-/* Sift top item down, choosing the largest child tree everytime */
-const siftDown = (arr, start, end) => {
-    let rootIndex = start;
-    let leftChildIndex = 2 * rootIndex + 1;
-    let largestChildIndex;
+const getLeftChildIndex = (parentIndex) => {
+    const leftChildIndex = 2 * parentIndex + 1;
+    return leftChildIndex;
+};
 
-    while (leftChildIndex <= end) {
-        leftChildIndex = 2 * rootIndex + 1;
+/* Sift top item down, choosing the largest child every time */
+const siftDown = (arr, arrayStart, arrayEnd) => {
+    let rootIndex = arrayStart;
+    let leftChildIndex, largestChildIndex;
+
+    while (getLeftChildIndex(rootIndex) <= arrayEnd) {
+        leftChildIndex = getLeftChildIndex(rootIndex);
+        const rightChildIndex = leftChildIndex + 1;
         largestChildIndex = rootIndex;
 
         if (arr[largestChildIndex] < arr[leftChildIndex]) {
             largestChildIndex = leftChildIndex;
         }
 
-        const rightChildIndex = leftChildIndex + 1;
-        if (rightChildIndex <= end && arr[largestChildIndex] < arr[rightChildIndex]) {
+        if (rightChildIndex <= arrayEnd && arr[largestChildIndex] < arr[rightChildIndex]) {
             largestChildIndex = rightChildIndex;
         }
 
         if (largestChildIndex === rootIndex) return;
         else {
+            // Swaps current root with the largest child
             [arr[rootIndex], arr[largestChildIndex]] = [arr[largestChildIndex], arr[rootIndex]];
             rootIndex = largestChildIndex;
         }
@@ -89,13 +102,15 @@ const heapSort = (arr, compareFn) => {
     let stepsCounter = { count: 0 };
     const t0 = performance.now();
 
-    const ss = [100, 36, 190, 17, 12, 25, 5, 9, 15, 6, 11, 13, 8, 1, 4];
+    // TODO: add compareFn, steps counter
 
-    console.log("ss", ss, isHeapified(ss));
-    heapify(ss);
-    console.log("ss", ss, isHeapified(ss));
+    heapify(arr);
+    for (let end = arr.length - 1; end > 0; end--) {
+        // Swaps first element with the last one
+        [arr[0], arr[end]] = [arr[end], arr[0]];
+        siftDown(arr, 0, end - 1);
+    }
 
-    // heapify(ss);
     const t1 = performance.now();
     const time = (t1 - t0) / 1000;
     return [arr, stepsCounter.count, time];

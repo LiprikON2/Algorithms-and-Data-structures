@@ -108,7 +108,7 @@ describe("SortableList", () => {
             });
         });
         describe("Implementation of CombSort inplace", () => customSortTest("combSort"));
-        // describe("Implementation of HeapSort inplace", () => customSortTest("heapSort"));
+        describe("Implementation of HeapSort inplace", () => customSortTest("heapSort"));
         describe("Implementation of InsertionSort inplace", () => customSortTest("insertionSort"));
         // describe("Implementation of MergeSort inplace", () => customSortTest("mergeSort"));
         describe("Implementation of QuickSort inplace", () => customSortTest("quickSort"));
