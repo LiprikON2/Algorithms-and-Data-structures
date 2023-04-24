@@ -31,6 +31,7 @@ const customSortTest = (sortingAlgorithmName) => {
 
     it("Has .sortSteps", () => {
         expect(sortableList.sortSteps).toBeTypeOf("number");
+        // console.log(sortingAlgorithmName, "steps:", sortableList.sortSteps);
     });
     it("Has .sortTime", () => {
         expect(sortableList.sortTime).toBeTypeOf("number");
