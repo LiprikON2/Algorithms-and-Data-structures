@@ -4,37 +4,6 @@ import _ from "lodash";
 import SortableList from "../sortableList";
 import generateDataset from "./generateDataset";
 
-const unsortedArr = _.range(10, 0, -1);
-const shuffledArr = _.shuffle(unsortedArr);
-
-const sortableList = SortableList.from(shuffledArr);
-const sorted = sortableList["bucketSort"]();
-
-const sortTimeComplexity = (elementCount, sortAlgorithmName) => {
-    const unsortedArr = _.range(elementCount, 0, -1);
-    const shuffledArr = _.shuffle(unsortedArr);
-
-    const sortableList = SortableList.from(shuffledArr);
-    const sorted = sortableList[sortAlgorithmName]();
-
-    return sorted.sortTime;
-};
-
-const elementCount = 2500;
-
-const dataTime = {
-    datasets: [
-        // generateDataset((count) => sortTimeComplexity(count, "bubbleSort"), {
-        //     label: "O(bubbleSort)",
-        //     count: elementCount,
-        // }),
-        // generateDataset((count) => sortTimeComplexity(count, "bucketSort"), {
-        //     label: "O(bucketSort)",
-        //     count: elementCount,
-        // }),
-    ],
-};
-
 const optionsTime = {
     plugins: {
         title: {
@@ -77,8 +46,51 @@ const optionsTime = {
     },
 };
 
-const chartTime = (dataset) => {
-    return new Chart(document.getElementById("chart1"), {
+const chartTime = (canvasId, elementCount = 2500) => {
+    const sortTimeComplexity = (elementCount, sortAlgorithmName) => {
+        const unsortedArr = _.range(elementCount, 0, -1);
+        const shuffledArr = _.shuffle(unsortedArr);
+
+        const sortableList = SortableList.from(shuffledArr);
+        const sorted = sortableList[sortAlgorithmName]();
+
+        return sorted.sortTime;
+    };
+
+    const dataTime = {
+        datasets: [
+            generateDataset((count) => sortTimeComplexity(count, "bubbleSort"), {
+                label: "O(bubbleSort)",
+                count: elementCount,
+            }),
+            generateDataset((count) => sortTimeComplexity(count, "bucketSort"), {
+                label: "O(bucketSort)",
+                count: elementCount,
+            }),
+            generateDataset((count) => sortTimeComplexity(count, "combSort"), {
+                label: "O(combSort)",
+                count: elementCount,
+            }),
+            generateDataset((count) => sortTimeComplexity(count, "heapSort"), {
+                label: "O(heapSort)",
+                count: elementCount,
+            }),
+            generateDataset((count) => sortTimeComplexity(count, "insertionSort"), {
+                label: "O(insertionSort)",
+                count: elementCount,
+            }),
+            generateDataset((count) => sortTimeComplexity(count, "mergeSort"), {
+                label: "O(mergeSort)",
+                count: elementCount,
+            }),
+            generateDataset((count) => sortTimeComplexity(count, "quickSort"), {
+                label: "O(quickSort)",
+                count: elementCount,
+            }),
+        ],
+    };
+
+    return new Chart(document.getElementById(canvasId), {
         type: "scatter",
         data: dataTime,
         options: optionsTime,

@@ -1,7 +1,6 @@
 import "../style.css";
-import SortableList from "./sortableList";
-// import chartSteps from "./chart/chartComplexitySteps";
+import chartSteps from "./chart/chartComplexitySteps";
 import chartTime from "./chart/chartComplexityTime";
-// import chartAlgorithms from "./chart/chartComplexityAlgorithms";
 
-chartTime();
+chartSteps("chart1", 2500);
+// chartTime("chart2");
