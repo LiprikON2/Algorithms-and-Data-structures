@@ -1,62 +1,11 @@
 // https://en.wikipedia.org/wiki/Heap_(data_structure)#Implementation
-const getItemChildren = (arr, parentIndex) => {
-    const leftChildIndex = 2 * parentIndex + 1;
-    const rightChildIndex = 2 * parentIndex + 2;
-
-    const leftChild = arr[leftChildIndex] ?? null;
-    const rightChild = arr[rightChildIndex] ?? null;
-
-    return [
-        [leftChildIndex, leftChild],
-        [rightChildIndex, rightChild],
-    ];
-};
-
-const getItemParent = (arr, childIndex) => {
-    const parentIndex = Math.ceil((childIndex - 2) / 2);
-    const parent = arr[parentIndex] ?? null;
-
-    return [parentIndex, parent];
-};
-
-// /*
-//     Min heap:
-//     - Parent is always smaller than children
-// */
-// const insertItem = (arr, item) => {
-//     arr.push(item);
-//     const nextItemIndex = arr.length - 1;
-
-//     recSiftUp(arr, nextItemIndex);
-// };
-
-// /* Sifts item up, until heap property is preserved */
-// const recSiftUp = (arr, itemIndex) => {
-//     const item = arr[itemIndex];
-//     const [parentIndex, parent] = getItemParent(arr, itemIndex);
-//     const isMaxHeapPropertyPreserved = parent === null || parent >= item;
-
-//     if (!isMaxHeapPropertyPreserved) {
-//         [arr[itemIndex], arr[parentIndex]] = [arr[parentIndex], arr[itemIndex]];
-//         recSiftUp(arr, parentIndex);
-//     }
-// };
-
-/* Checks if every item respects max heap property */
-const isHeapified = (arr) => {
-    return arr.every((item, itemIndex) => {
-        const [itemParentIndex, itemParent] = getItemParent(arr, itemIndex);
-        const isMaxHeapPropertyPreserved = itemParent === null || itemParent >= item;
-        return isMaxHeapPropertyPreserved;
-    });
-};
 
 /*
     Floyd's heap construction algorithm:
     - Iterates top-to-bottom and makes array items 
-      respect max heap property by sifting down
-    - Starts from middle point of the array
-    - O(n) complexity
+      respect max heap property by sifting them down
+    - Starts from the middle point of the array
+    - Has O(n) complexity
 */
 const heapify = (arr, compareFn, stepsCounter) => {
     const arrayMidPoint = Math.floor(arr.length / 2) - 1;
@@ -94,7 +43,7 @@ const siftDown = (arr, compareFn, stepsCounter, arrayStart, arrayEnd) => {
             largestChildIndex = rightChildIndex;
         }
 
-        if (largestChildIndex === rootIndex) return;
+        if (largestChildIndex === rootIndex) break;
         else {
             // Swaps current root with the largest child
             [arr[rootIndex], arr[largestChildIndex]] = [arr[largestChildIndex], arr[rootIndex]];
@@ -108,10 +57,11 @@ const heapSort = (arr, compareFn) => {
     const t0 = performance.now();
 
     heapify(arr, compareFn, stepsCounter);
-    for (let end = arr.length - 1; end > 0; end--) {
-        // Swaps first element with the last one
-        [arr[0], arr[end]] = [arr[end], arr[0]];
-        siftDown(arr, compareFn, stepsCounter, 0, end - 1);
+    // Sorting based on heap's delete-max operation
+    for (let lastItem = arr.length - 1; lastItem > 0; lastItem--) {
+        // Swaps root element with the last one
+        [arr[0], arr[lastItem]] = [arr[lastItem], arr[0]];
+        siftDown(arr, compareFn, stepsCounter, 0, lastItem - 1);
     }
 
     const t1 = performance.now();
