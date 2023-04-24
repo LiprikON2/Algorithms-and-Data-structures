@@ -1,10 +1,7 @@
 import "../style.css";
 import SortableList from "./sortableList";
+// import chartSteps from "./chart/chartComplexitySteps";
+import chartTime from "./chart/chartComplexityTime";
+// import chartAlgorithms from "./chart/chartComplexityAlgorithms";
 
-const ss = SortableList.from([-10, 20, 1, 2, 0, 2, 2, 3]);
-console.log(
-    "ss",
-    Array.from(ss).sort((a, b) => a - b)
-);
-ss.heapSort((a, b) => a - b);
-console.log("ss", Array.from(ss));
+chartTime();

@@ -13,23 +13,28 @@ class SortableList extends Array {
     sortSteps = null;
     sortTime = null;
 
-    customSort(sortFn, compareFn) {
+    customSort(sortFn, compareFn, inplace = true) {
         if (!sortFn) return this.sort(compareFn);
         if (!compareFn) compareFn = defaultCompareFn;
 
         const [sorted, steps, time] = sortFn(this, compareFn);
 
-        // TODO: Slice or spread doesn't copy these the values
-        this.sortSteps = steps;
-        this.sortTime = time;
-        return sorted;
-    }
+        let result = this;
+        if (!inplace) {
+            result = SortableList.from(sorted);
+        }
 
+        // TODO: Slice or spread doesn't copy these the values
+        result.sortSteps = steps;
+        result.sortTime = time;
+
+        return result;
+    }
     bubbleSort(compareFn) {
         return this.customSort(bubbleSort, compareFn);
     }
     bucketSort(compareFn) {
-        return this.customSort(bucketSort, compareFn);
+        return this.customSort(bucketSort, compareFn, false);
     }
     combSort(compareFn) {
         return this.customSort(combSort, compareFn);
@@ -41,7 +46,7 @@ class SortableList extends Array {
         return this.customSort(insertionSort, compareFn);
     }
     mergeSort(compareFn) {
-        return this.customSort(mergeSort, compareFn);
+        return this.customSort(mergeSort, compareFn, false);
     }
     quickSort(compareFn) {
         return this.customSort(quickSort, compareFn);
