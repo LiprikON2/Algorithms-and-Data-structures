@@ -117,13 +117,13 @@ describe("SortableList", () => {
                 expectNonNumericSort: false,
                 expectCompareFn: false,
             }));
-        describe("Implementation of CombSort inplace", () => customSortTest("combSort"));
         describe("Implementation of HeapSort inplace", () => customSortTest("heapSort"));
-        describe("Implementation of InsertionSort inplace", () => customSortTest("insertionSort"));
         describe("Implementation of MergeSort", () =>
             customSortTest("mergeSort", {
                 expectInplace: false,
             }));
+        describe("Implementation of InsertionSort inplace", () => customSortTest("insertionSort"));
+        describe("Implementation of CombSort inplace", () => customSortTest("combSort"));
         describe("Implementation of QuickSort inplace", () => customSortTest("quickSort"));
     });
 });
