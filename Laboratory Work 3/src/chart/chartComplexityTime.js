@@ -90,11 +90,13 @@ const chartTime = (canvasId, elementCount = 2500) => {
         ],
     };
 
-    return new Chart(document.getElementById(canvasId), {
+    new Chart(document.getElementById(canvasId), {
         type: "scatter",
         data: dataTime,
         options: optionsTime,
     });
+
+    return dataTime;
 };
 
 export default chartTime;

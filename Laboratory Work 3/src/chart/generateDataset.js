@@ -6,7 +6,6 @@ const generateDataset = (fn, options) => {
 
     const step = Math.round(density ? count * (1 - density) : count * 0.01);
     const validStep = Math.min(Math.max(step, 1), count - 1);
-    console.log("validStep", validStep);
 
     const xAxis = _.range(0, count, validStep);
     const data = xAxis.map((x) => ({ x, y: fn(x) }));
