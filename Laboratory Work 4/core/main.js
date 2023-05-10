@@ -1,6 +1,17 @@
 import scrapeWiki from "./scrapeWiki";
+import { getPrimeArray } from "./primeNumber";
+import { bruteForceFind, rabinKarpFind } from "./findAlgorithms";
 import "../style.css";
 
-const article = await scrapeWiki("Астероид");
+const primeArr = getPrimeArray(500);
+const primeStr = primeArr.join("");
+console.log("primeStr", primeStr);
 
-console.log("Article\n\n", article);
+const bruteResult = bruteForceFind(primeStr, "213");
+console.log("bruteResult", bruteResult);
+
+const rabinKarpResult = rabinKarpFind(primeStr, "");
+console.log("rabinKarpResult", rabinKarpResult);
+
+// const article = await scrapeWiki("Астероид");
+// console.log("Article\n\n", article);
