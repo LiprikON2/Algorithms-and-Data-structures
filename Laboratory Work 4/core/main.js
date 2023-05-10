@@ -5,12 +5,13 @@ import "../style.css";
 
 const primeArr = getPrimeArray(500);
 const primeStr = primeArr.join("");
-console.log("primeStr", primeStr);
+// console.log("primeStr", primeStr);
 
 const bruteResult = bruteForceFind(primeStr, "213");
 console.log("bruteResult", bruteResult);
 
-const rabinKarpResult = rabinKarpFind(primeStr, "");
+// const rabinKarpResult = rabinKarpFind(primeStr, "213");
+const rabinKarpResult = rabinKarpFind("ЭТОИЭТОТ", "ТОТ");
 console.log("rabinKarpResult", rabinKarpResult);
 
 // const article = await scrapeWiki("Астероид");

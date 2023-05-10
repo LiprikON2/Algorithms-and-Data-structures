@@ -1,8 +1,8 @@
 const bruteForceFind = (str, substr) => {
     for (let i = 0; i < str.length - substr.length + 1; i++) {
         let didNotBreak = true;
-        for (let [j, symbol] of [...substr].entries()) {
-            if (str[i + j] !== symbol) {
+        for (let [j, character] of [...substr].entries()) {
+            if (str[i + j] !== character) {
                 didNotBreak = false;
                 break;
             }
