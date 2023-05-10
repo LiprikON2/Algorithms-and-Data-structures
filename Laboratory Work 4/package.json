@@ -1,14 +1,20 @@
 {
-  "name": "laboratory-work-4",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^4.3.2"
-  }
+    "name": "laboratory-work-4",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "concurrently --kill-others \"vite\" \"npm run proxy\"",
+        "proxy": "lcp --proxyUrl https://ru.wikipedia.org",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "vite": "^4.3.2"
+    },
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.12",
+        "concurrently": "^8.0.1",
+        "local-cors-proxy": "^1.1.0"
+    }
 }
