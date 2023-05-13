@@ -1,6 +1,7 @@
 import findAlgorithms from "./findAlgorithms";
 
 const countAll = (str, substr, algorithmName = "bruteForceFind") => {
+    if (substr.length === 0) return 0;
     const find = findAlgorithms[algorithmName];
     let count = 0;
     let pos = 0;
