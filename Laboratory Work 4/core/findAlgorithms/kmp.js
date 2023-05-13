@@ -10,6 +10,7 @@ const kmpFind = (str, substr) => {
             if (str[i] === substr[i - pos]) {
                 matched++;
             } else {
+                // formula: https://i.imgur.com/6DWGo0Z.png
                 shift = matched - prefixLengths[i - pos] + 1;
                 break;
             }
