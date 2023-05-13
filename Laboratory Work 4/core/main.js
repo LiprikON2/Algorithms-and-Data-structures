@@ -1,11 +1,11 @@
 import scrapeWiki from "./scrapeWiki";
 import { getPrimeArray } from "./primeNumber";
-import { bruteForceFind, rabinKarpFind, boyerMooreFind } from "./findAlgorithms";
+import { bruteForceFind, rabinKarpFind, boyerMooreFind, kmpFind } from "./findAlgorithms";
 import "../style.css";
 
 const primeArr = getPrimeArray(500);
 const primeStr = primeArr.join("");
-// console.log("primeStr", primeStr);
+console.log("primeStr", primeStr);
 
 const bruteResult = bruteForceFind(primeStr, "213");
 console.log("bruteResult", bruteResult);
@@ -21,6 +21,12 @@ console.log("boyerMooreResult ЭТОИЭТОТ", boyerMooreResult);
 
 const boyerMooreResult2 = boyerMooreFind(primeStr, "213");
 console.log("boyerMooreResult primeStr", boyerMooreResult2);
+
+const kmpFindResult = kmpFind("ЭТОИЭТОТ", "ТОТ", true);
+console.log("kmpFindResult ЭТОИЭТОТ", kmpFindResult);
+
+const kmpFindResult2 = kmpFind(primeStr, "213");
+console.log("kmpFindResult primeStr", kmpFindResult2);
 
 // const article = await scrapeWiki("Астероид");
 // console.log("Article\n\n", article);
