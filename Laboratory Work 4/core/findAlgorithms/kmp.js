@@ -1,31 +1,24 @@
+// https://www.youtube.com/watch?v=pu2aO_3R118
 const kmpFind = (str, substr) => {
-    const prefixLengths = measurePrefixLengths(substr);
-    let shift;
-    let pos = 0;
+    const maxPrefixLengths = getMaxPrefixLengths(substr);
+    let i = 0;
+    let j = 0;
 
-    while (pos < str.length - substr.length + 1) {
-        let matched = 0;
-
-        for (let i = pos; i < pos + substr.length; i++) {
-            if (str[i] === substr[i - pos]) {
-                matched++;
-            } else {
-                // formula: https://i.imgur.com/6DWGo0Z.png
-                // shift = matched - prefixLengths[i - pos] + 1;
-                // shift = Math.max(matched - prefixLengths[i - pos], 1);
-                const potentialShift = matched - prefixLengths[i - pos];
-                shift = potentialShift === 0 ? 1 : potentialShift;
-                console.log("shift", shift);
-                break;
-            }
-        }
-        if (matched === substr.length) return pos;
-        pos += shift;
+    while (i < str.length) {
+        if (str[i] === substr[j]) {
+            if (j === substr.length - 1) return i - j;
+            i++;
+            j++;
+        } else if (j - 1 >= 0) {
+            j = maxPrefixLengths[j - 1];
+        } else i++;
     }
+
     return -1;
 };
 
-const measurePrefixLengths = (str) => {
+const getMaxPrefixLengths = (str) => {
+    // 'TOT' -> ['Т', 'ТО', 'ТОТ']
     const slices = Array.from(str).map((_, index) => str.slice(0, index + 1));
     const lengths = slices.map((slice) => {
         let maxLength = 0;
@@ -33,8 +26,8 @@ const measurePrefixLengths = (str) => {
             const slicePrefix = slice.slice(0, i);
             const sliceSuffix = slice.slice(slice.length - i, slice.length);
 
-            if (slicePrefix === sliceSuffix) {
-                if (maxLength < sliceSuffix.length) maxLength = sliceSuffix.length;
+            if (slicePrefix === sliceSuffix && maxLength < sliceSuffix.length) {
+                maxLength = sliceSuffix.length;
             }
         }
         return maxLength;
