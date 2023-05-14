@@ -5,7 +5,7 @@ import { bruteForceFind, rabinKarpFind, boyerMooreFind, kmpFind } from "./findAl
 import countAll from "./countAll";
 import scrapeWiki from "./scrapeWiki";
 import scrapeDocx from "./scrapeDocx";
-// import "../style.css";
+import plagiarismCheck from "./plagiarismCheck";
 
 const primeArr = getPrimeArray(500);
 const primeStr = primeArr.join("");
@@ -73,19 +73,5 @@ console.log("Article\n", article.slice(0, 300), "...\n\n\n");
 const abstract = await scrapeDocx("Астероид.docx");
 console.log("Abstract\n", abstract.slice(0, 300), "...\n\n\n");
 
-const preprocess = (text) => {
-    const removedPunctuation = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()«»—[\]]/g, "");
-    const removedNumbers = removedPunctuation.replace(/[\d+]/g, "");
-    const removedExtraSpaces = removedNumbers.replace(/\s{2,}/g, " ");
-    const removedNewlines = removedExtraSpaces.replace(/\n/g, " ");
-    const lowercased = removedNewlines.toLowerCase();
-
-    const wordTokenized = lowercased.split(" ");
-
-    return wordTokenized;
-};
-const preprocessedArticle = preprocess(article);
-console.log("preprocessedArticle", preprocessedArticle);
-
-const preprocessedAbstract = preprocess(abstract);
-console.log("preprocessedAbstract", preprocessedAbstract);
+const plagiarismPercent = plagiarismCheck(abstract, article);
+console.log("plagiarismPercent", plagiarismPercent);
