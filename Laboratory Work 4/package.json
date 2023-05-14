@@ -4,7 +4,8 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "concurrently --kill-others \"vite\" \"npm run proxy\"",
+        "//": "concurrently --kill-others \"node core/main\" \"npm run proxy\"",
+        "dev": "node --experimental-specifier-resolution=node --es-module-specifier-resolution=node core/main",
         "proxy": "lcp --proxyUrl https://ru.wikipedia.org",
         "build": "vite build",
         "preview": "vite preview"
@@ -14,8 +15,8 @@
     },
     "dependencies": {
         "cheerio": "^1.0.0-rc.12",
-        "concurrently": "^8.0.1",
-        "local-cors-proxy": "^1.1.0",
-        "lodash": "^4.17.21"
+        "lodash": "^4.17.21",
+        "node-fetch": "^3.3.1",
+        "node-stream-zip": "^1.15.0"
     }
 }
