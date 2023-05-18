@@ -35,13 +35,13 @@
 #### Жадным способом
 
 
-[main.js](main.js#L5)
+[main.js](main.js#L8)
 
 Последовательно, жадно выбираем максимальные/минимальные значения для $A[a]$, $A[b]$, $A[c]$, $A[d]$ из возможных значений для них
 
 ```js
-const arrA = [...Array(10)].map(() => _.random(0, 10));
-// const arrA = [10, 2, 4, 999999, 2];
+// const arrA = [...Array(10)].map(() => _.random(0, 10));
+const arrA = [10, 2, 4, 999999, 2];
 console.log("arrA", arrA);
 
 const greedyOddlySpecificMaximize = (arr) => {
@@ -79,17 +79,72 @@ console.log("A[a] - A[b] + A[c] - A[d] =", arrA[a] - arrA[b] + arrA[c] - arrA[d]
 ```
 
 
-![](https://i.imgur.com/3MlpapU.png)
+![](https://i.imgur.com/WmdCIss.png)
+
+#### Динамическим способом
+
+[main.js](main.js#L46)
+
+Находим все возможные решения для заданного количества переменных и выбираем то, которое максимизирует целевую функцию
 
 
+```js
+const indexOfMaxValue = (arr) => _.indexOf(arr, _.max(arr));
 
+const dynamicOddlySpecificMaximize = (arr) => {
+    const solutions = recOddlySpecificMaximize(arr, 4);
+    console.log("solutions", solutions);
+
+    const targetFn = (arr, [a, b, c, d]) => arr[a] - arr[b] + arr[c] - arr[d];
+
+    const maximize = (solutions) => {
+        const targetValues = solutions.map((solution) => targetFn(arr, solution));
+        const optimalSolutionIndex = indexOfMaxValue(targetValues);
+        return solutions[optimalSolutionIndex];
+    };
+    const optimalSolution = maximize(solutions);
+    return { solution: optimalSolution, targetFnValue: targetFn(arr, optimalSolution) };
+};
+
+const recOddlySpecificMaximize = (arr, varTarget = 4, varIndexes = []) => {
+    const isFirstVar = varIndexes.length === 0;
+    if (varIndexes.length !== varTarget) {
+        const sliceStart = isFirstVar ? 0 : varIndexes[varIndexes.length - 1];
+        const sliceEnd = arr.length - (varTarget - varIndexes.length - 1);
+        const possibleVars = arr.slice(sliceStart, sliceEnd);
+        let solutions = [];
+
+        for (let [sliceVarIndex, _] of possibleVars.entries()) {
+            const possibleVarIndex = isFirstVar
+                ? sliceStart + sliceVarIndex
+                : sliceStart + sliceVarIndex + 1;
+
+            const moreSolutions = recOddlySpecificMaximize(arr.slice(), varTarget, [
+                ...varIndexes,
+                possibleVarIndex,
+            ]);
+            solutions = [...solutions, ...moreSolutions];
+        }
+
+        return solutions;
+    } else {
+        const solution = varIndexes;
+        return [solution];
+    }
+};
+
+const optimalSolution = dynamicOddlySpecificMaximize(arrA);
+console.log("dynamicOddlySpecificMaximize", optimalSolution);
+```
+
+![](https://i.imgur.com/P5gHr8B.png)
 
 ### Задача 2
 
 
 #### Жадным способом
 
-[main.js](main.js#L45)
+[main.js](main.js#L99)
 
 
 Сортируем по убыванию и жадно складываем числа по двум массивам так, чтобы их сумма уравнивалась
@@ -128,7 +183,7 @@ console.log("absolute difference", Math.abs(sum(arrayA1) - sum(arrayA2)));
 
 #### Динамическим способом
 
-[main.js](main.js#L79)
+[main.js](main.js#L129)
 
 Находим все возможные решения и выбираем то, которое минимизирует целевую функцию
 
