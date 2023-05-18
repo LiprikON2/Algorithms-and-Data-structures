@@ -4,6 +4,8 @@
 Задание на защиту Лабораторной работы 5
 
 ### Задание
+> Решать только с помощью динамического программирования
+
 
 Надо решить любые 2 задачи:
 
@@ -32,7 +34,6 @@
 
 [main.js](main.js#L5)
 
-
 Последовательно, жадно выбираем максимальные/минимальные значения для $A[a]$, $A[b]$, $A[c]$, $A[d]$ из возможных значений для них
 
 ```js
@@ -40,7 +41,7 @@ const arrA = [...Array(10)].map(() => _.random(0, 10));
 // const arrA = [10, 2, 4, 999999, 2];
 console.log("arrA", arrA);
 
-const oddlySpecificMaximize = (arr) => {
+const greedyOddlySpecificMaximize = (arr) => {
     // First N - 3 elements
     const possibleA = arr.slice(0, arr.length - 3);
     console.log("possibleA", possibleA);
@@ -68,7 +69,7 @@ const oddlySpecificMaximize = (arr) => {
 
     return [aIndex, bIndex, cIndex, dIndex];
 };
-const [a, b, c, d] = oddlySpecificMaximize(arrA);
+const [a, b, c, d] = greedyOddlySpecificMaximize(arrA);
 
 console.log("[a, b, c, d]", [a, b, c, d]);
 console.log("A[a] - A[b] + A[c] - A[d] =", arrA[a] - arrA[b] + arrA[c] - arrA[d]);
@@ -82,6 +83,7 @@ console.log("A[a] - A[b] + A[c] - A[d] =", arrA[a] - arrA[b] + arrA[c] - arrA[d]
 
 [main.js](main.js#L45)
 
+#### Жадным способом
 Сортируем по убыванию и жадно складываем числа по двум массивам так, чтобы их сумма уравнивалась
 
 ```js
@@ -89,7 +91,7 @@ const arrayA = [...Array(10)].map(() => _.random(0, 1000));
 
 const sum = (arr) => arr.reduce((a, b) => a + b, 0);
 
-const divideArrayBySum = (arr) => {
+const greedyDivideArrayBySum = (arr) => {
     const sortedArr = arr.sort((a, b) => b - a);
     console.log("sortedArr", sortedArr);
 
@@ -107,13 +109,55 @@ const divideArrayBySum = (arr) => {
     return [arrA, arrB];
 };
 
-const [arrayA1, arrayA2] = divideArrayBySum(arrayA);
+const [arrayA1, arrayA2] = greedyDivideArrayBySum(arrayA);
 
 console.log("arrayA1 sum", sum(arrayA1), "arrayA2 sum", sum(arrayA2));
 console.log("absolute difference", Math.abs(sum(arrayA1) - sum(arrayA2)));
 ```
 
-Результат
+![](https://i.imgur.com/6twA3Df.png)
 
-![](https://i.imgur.com/3GJVKmC.png)
+
+#### Динамическим способом
+
+[main.js](main.js#L79)
+
+
+```js
+const indexOfMinValue = (arr) => _.indexOf(arr, _.min(arr));
+
+const dynamicDivideArrayBySum = (arr) => {
+    const solutions = recDivideArrayBySum(arr);
+    console.log("solutions", solutions);
+
+    const targetFn = ([arrA, arrB]) => Math.abs(sum(arrA) - sum(arrB));
+
+    const minimize = (solutions) => {
+        const targetValues = solutions.map((solution) => targetFn(solution));
+        const optimalSolutionIndex = indexOfMinValue(targetValues);
+        return solutions[optimalSolutionIndex];
+    };
+    const optimalSolution = minimize(solutions);
+    return { solution: optimalSolution, targetFnValue: targetFn(optimalSolution) };
+};
+
+const recDivideArrayBySum = (arr, arrLeft = [], arrRight = []) => {
+    if (arr.length) {
+        const number = arr.pop();
+
+        const leftSolutions = recDivideArrayBySum(arr.slice(), [...arrLeft, number], arrRight);
+        const rightSolutions = recDivideArrayBySum(arr.slice(), arrLeft, [...arrRight, number]);
+
+        return [...leftSolutions, ...rightSolutions];
+    } else {
+        const solution = [arrLeft, arrRight];
+        return [solution];
+    }
+};
+
+const solution = dynamicDivideArrayBySum(arrayA);
+console.log("dynamicDivideArrayBySum", solution);
+```
+
+![](https://i.imgur.com/gvyML5t.png)
 
