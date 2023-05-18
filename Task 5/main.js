@@ -2,8 +2,52 @@ import _ from "lodash";
 
 import "./style.css";
 
+// Subtask 1
+console.log("Subtask 1");
+
+const arrA = [...Array(10)].map(() => _.random(0, 10));
+// const arrA = [10, 2, 4, 999999, 2];
+console.log("arrA", arrA);
+
+const oddlySpecificMaximize = (arr) => {
+    // First N - 3 elements
+    const possibleA = arr.slice(0, arr.length - 3);
+    console.log("possibleA", possibleA);
+    const a = Math.max(...possibleA);
+    const aIndex = possibleA.indexOf(a);
+    console.log("a =", a, "| index", aIndex, a === arr[aIndex]);
+
+    const possibleB = arr.slice(aIndex + 1, arr.length - 2);
+    console.log("possibleB", possibleB);
+    const b = Math.min(...possibleB);
+    const bIndex = aIndex + possibleB.indexOf(b) + 1;
+    console.log("b =", b, "| index", bIndex, b === arr[bIndex]);
+
+    const possibleC = arr.slice(bIndex + 1, arr.length - 1);
+    console.log("possibleC", possibleC);
+    const c = Math.max(...possibleC);
+    const cIndex = bIndex + possibleC.indexOf(c) + 1;
+    console.log("c =", c, "| index", cIndex, c === arr[cIndex]);
+
+    const possibleD = arr.slice(cIndex + 1, arr.length);
+    console.log("possibleD", possibleD);
+    const d = Math.min(...possibleD);
+    const dIndex = cIndex + possibleD.indexOf(d) + 1;
+    console.log("d =", d, "| index", dIndex, d === arr[dIndex]);
+
+    return [aIndex, bIndex, cIndex, dIndex];
+};
+const [a, b, c, d] = oddlySpecificMaximize(arrA);
+
+console.log("[a, b, c, d]", [a, b, c, d]);
+console.log("A[a] - A[b] + A[c] - A[d] =", arrA[a] - arrA[b] + arrA[c] - arrA[d]);
+
 // Subtask 2
+console.log("");
+console.log("");
+console.log("Subtask 2");
 const arrayA = [...Array(10)].map(() => _.random(0, 1000));
+console.log("arrayA", arrayA);
 
 const sum = (arr) => arr.reduce((a, b) => a + b, 0);
 
