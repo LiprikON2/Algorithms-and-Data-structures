@@ -1,29 +1,30 @@
-import _ from "lodash";
+import countAll from "./countAll";
 
 const plagiarismCheck = (suspectedText, originalText, inARowThreshold = 3) => {
-    const originalTokens = preprocess(originalText);
-    console.log("preprocessedOriginalText", originalTokens);
+    const originalCleaned = preprocess(originalText);
+    console.log("originalCleaned", originalCleaned.slice(0, 300), "...\n\n");
 
-    const suspectedTokens = preprocess(suspectedText);
-    console.log("preprocessedSuspectedText", suspectedTokens);
+    const suspectedCleaned = preprocess(suspectedText);
+    console.log("suspectedCleaned", suspectedCleaned.slice(0, 300), "...\n\n");
 
-    const originalConsecutiveGroups = splitIntoConsecutiveGroups(originalTokens, inARowThreshold);
-    console.log("originalConsecutiveGroups", originalConsecutiveGroups);
+    const suspectedConsecutiveGroups = splitIntoConsecutiveGroups(
+        suspectedCleaned,
+        inARowThreshold
+    );
+    console.log("suspectedConsecutiveGroups (first 20)", suspectedConsecutiveGroups.slice(0, 20));
 
-    const suspectedConsecutiveGroups = splitIntoConsecutiveGroups(suspectedTokens, inARowThreshold);
-    console.log("suspectedConsecutiveGroups", suspectedConsecutiveGroups);
-
-    const textToCharRatio = 1 / suspectedText;
+    const textToCharRatio = 1 / suspectedText.length;
     let plagiarismPercent = 0;
 
+    console.time("kmpFind");
     for (let suspectedGroup of suspectedConsecutiveGroups) {
-        const isSuspectedInOriginal = _.some(originalConsecutiveGroups, suspectedGroup);
-        console.log("isSuspectedInOriginal", isSuspectedInOriginal);
-        if (isSuspectedInOriginal) {
-            const groupLength = suspectedGroup.join("").length;
-            plagiarismPercent += groupLength * textToCharRatio;
-        }
+        const occurences = countAll(originalCleaned, suspectedGroup, "kmpFind");
+        // const occurences = countAll(originalCleaned, suspectedGroup, "boyerMooreFind");
+        // const occurences = countAll(originalCleaned, suspectedGroup, "bruteForceFind");
+        // const occurences = countAll(originalCleaned, suspectedGroup, "rabinKarpFind");
+        plagiarismPercent += occurences * suspectedGroup.length * textToCharRatio;
     }
+    console.timeEnd("kmpFind");
 
     return plagiarismPercent;
 };
@@ -32,20 +33,21 @@ const preprocess = (text) => {
     const removedPunctuation = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()«»—[\]]/g, "");
     const removedNumbers = removedPunctuation.replace(/[\d+]/g, "");
     const removedNewlines = removedNumbers.replace(/\n/g, " ");
-    const removedExtraSpaces = removedNewlines.replace(/\s{2,}/g, " ");
+    const removedExtraSpaces = removedNewlines.replace(/\s{2,}/g, " ").trim();
     const lowercased = removedExtraSpaces.toLowerCase();
 
-    const tokenizedWords = lowercased.split(" ");
-    const nonEmptyTokens = tokenizedWords.filter((token) => token);
+    // const tokenizedWords = lowercased.split(" ");
+    // const nonEmptyTokens = tokenizedWords.filter((token) => token);
 
-    return nonEmptyTokens;
+    return lowercased;
 };
 
-const splitIntoConsecutiveGroups = (arr, k = 3) => {
+const splitIntoConsecutiveGroups = (text, k = 3) => {
+    const arr = text.split(" ");
     const consecutiveGroups = [];
     for (let i = 0; i < arr.length - k + 1; i++) {
         const consecutiveGroup = arr.slice(i, i + k);
-        consecutiveGroups.push(consecutiveGroup);
+        consecutiveGroups.push(consecutiveGroup.join(" "));
     }
 
     return consecutiveGroups;

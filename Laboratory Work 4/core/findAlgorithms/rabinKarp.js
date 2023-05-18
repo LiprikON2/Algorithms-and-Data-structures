@@ -40,7 +40,29 @@ const rabinKarpFind = (str, substr, logging = false) => {
             if (substrIndex !== -1) return i;
         }
     }
+
     return -1;
 };
+
+// const rabinKarpFindAll = (str, substr, logging = false) => {
+//     const positions = []
+//     const alphabet = alphabetize(str);
+//     if (logging) console.log("alphabet", alphabet, "from", str);
+
+//     const substrHash = calcHash(substr, alphabet, logging);
+//     const chunkSize = substr.length;
+
+//     for (let i = 0; i < str.length - chunkSize + 1; i++) {
+//         const chunk = str.slice(i, i + chunkSize);
+//         const chunkHash = calcHash(chunk, alphabet);
+
+//         if (chunkHash === substrHash) {
+//             const substrIndex = bruteForceFind(chunk, substr);
+//             if (substrIndex !== -1) return i;
+//         }
+//     }
+
+//     return -1;
+// };
 
 export default rabinKarpFind;

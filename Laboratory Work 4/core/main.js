@@ -11,25 +11,33 @@ const primeArr = getPrimeArray(500);
 const primeStr = primeArr.join("");
 console.log("primeStr", primeStr, "\n\n");
 
+console.time("bruteForce");
 const bruteResult = bruteForceFind(primeStr, "213");
+console.timeEnd("bruteForce");
 console.log("bruteResult", bruteResult, "\n\n");
 
 const rabinKarpResult = rabinKarpFind("ЭТОИЭТОТ", "ТОТ", true);
 console.log("rabinKarpResult ЭТОИЭТОТ", rabinKarpResult);
 
+console.time("rabinKarp");
 const rabinKarpResult2 = rabinKarpFind(primeStr, "213");
+console.timeEnd("rabinKarp");
 console.log("rabinKarpResult primeStr", rabinKarpResult2, "\n\n");
 
 const boyerMooreResult = boyerMooreFind("ЭТОИЭТОТ", "ТОТ", true);
 console.log("boyerMooreResult ЭТОИЭТОТ", boyerMooreResult);
 
+console.time("boyerMoore");
 const boyerMooreResult2 = boyerMooreFind(primeStr, "213");
+console.timeEnd("boyerMoore");
 console.log("boyerMooreResult primeStr", boyerMooreResult2, "\n\n");
 
 const kmpFindResult = kmpFind("ЭТОИЭТОТ", "ТОТ");
 console.log("kmpFindResult ЭТОИЭТОТ", kmpFindResult);
 
+console.time("kmp");
 const kmpFindResult2 = kmpFind(primeStr, "213");
+console.timeEnd("kmp");
 console.log("kmpFindResult primeStr", kmpFindResult2, "\n\n");
 
 const countTwoDigitOccurences = (str, algorithmName) => {
@@ -45,8 +53,8 @@ const countTwoDigitOccurences = (str, algorithmName) => {
         })
     );
 
-    const countEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-    return countEntries;
+    const sortedCountEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    return sortedCountEntries;
 };
 
 const bruteForceCount = countTwoDigitOccurences(primeStr, "bruteForceFind");
