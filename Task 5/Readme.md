@@ -79,7 +79,7 @@ console.log("A[a] - A[b] + A[c] - A[d] =", arrA[a] - arrA[b] + arrA[c] - arrA[d]
 ```
 
 
-![](https://i.imgur.com/WmdCIss.png)
+![Результат (embed картинок на гитхабе почему-то сломан)](https://i.imgur.com/WmdCIss.png)
 
 #### Динамическим способом
 
@@ -137,7 +137,7 @@ const optimalSolution = dynamicOddlySpecificMaximize(arrA);
 console.log("dynamicOddlySpecificMaximize", optimalSolution);
 ```
 
-![](https://i.imgur.com/P5gHr8B.png)
+![Результат (embed картинок на гитхабе почему-то сломан)](https://i.imgur.com/P5gHr8B.png)
 
 ### Задача 2
 
@@ -178,7 +178,7 @@ console.log("arrayA1 sum", sum(arrayA1), "arrayA2 sum", sum(arrayA2));
 console.log("absolute difference", Math.abs(sum(arrayA1) - sum(arrayA2)));
 ```
 
-![](https://i.imgur.com/6twA3Df.png)
+![Результат (embed картинок на гитхабе почему-то сломан)](https://i.imgur.com/6twA3Df.png)
 
 
 #### Динамическим способом
@@ -223,5 +223,5 @@ const solution = dynamicDivideArrayBySum(arrayA);
 console.log("dynamicDivideArrayBySum", solution);
 ```
 
-![](https://i.imgur.com/gvyML5t.png)
+![Результат (embed картинок на гитхабе почему-то сломан)](https://i.imgur.com/gvyML5t.png)
 
