@@ -252,8 +252,29 @@ console.log("ss", ss);
 console.log("ss1", ss1);
 
 const orderCombinations = (matrixCount) => {
-    const orderRanges = [...Array(matrixCount - 1)].map((_, i) => matrixCount - i - 2);
+    const ranges = [...Array(matrixCount - 1)].map((_, i) => matrixCount - i - 2);
+    const orderRanges = ranges.map((range) => [...Array(range + 1)].map((_, i) => i));
+    console.log("ranges", ranges);
+    console.log("orderRanges", orderRanges);
 
-    console.log("ww", ss);
+    const recOrderCombinations = (orderRanges, order = []) => {
+        if (orderRanges.length === 1) return [[...order, orderRanges[0][0]]];
+
+        let possibleOrders = [];
+        for (let possbileK of orderRanges[0]) {
+            const subPossibleOrders = recOrderCombinations(
+                orderRanges.slice(1, orderRanges.length),
+                [...order, possbileK]
+            );
+            possibleOrders.push(subPossibleOrders);
+        }
+
+        return possibleOrders.flat();
+    };
+
+    return recOrderCombinations(orderRanges);
 };
-orderCombinations(4);
+
+const vv = orderCombinations(10);
+
+console.log("orderCombinations", vv);
