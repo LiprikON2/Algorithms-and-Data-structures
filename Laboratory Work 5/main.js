@@ -148,47 +148,6 @@ raidBags.forEach((raidBag) => {
 console.log("");
 console.log("Task 2");
 
-const makeMultiplicableMatricies = (n, maxDimention) => {
-    const matriciesDimensions = [];
-
-    for (let i = 0; i < n; i++) {
-        let prevColDimension = _.random(1, maxDimention);
-        if (i !== 0) prevColDimension = matriciesDimensions[i - 1][1];
-
-        const rowDimension = prevColDimension;
-        const colDimension = _.random(1, maxDimention);
-
-        matriciesDimensions.push([rowDimension, colDimension]);
-    }
-    console.log("matriciesDimensions", matriciesDimensions);
-
-    const matricies = matriciesDimensions.map(([row, col]) =>
-        _.chunk(
-            [...Array(row * col)].map(() => _.random(0, 9)),
-            col
-        )
-    );
-
-    return matricies;
-};
-
-const matricies = makeMultiplicableMatricies(10, 9);
-
-console.log("matricies", matricies);
-
-const A = [
-    [1, 2],
-    [3, 4],
-    [5, 6],
-];
-// 3x2
-
-const B = [
-    [10, 20, 30],
-    [40, 50, 60],
-];
-// 2x3
-
 const matMul = (a, b) => {
     let result = [];
     for (let i = 0; i < a.length; ++i) {
@@ -208,11 +167,6 @@ const matMulCount = (a, b) => {
     return a.length * b[0].length * a[0].length;
 };
 
-const result = matMul(A, B);
-
-console.log("result", result);
-console.log("matMulCount", matMulCount(A, B));
-
 const wikiA = _.chunk(
     [...Array(10 * 100)].map(() => _.random(0, 9)),
     100
@@ -225,13 +179,17 @@ const wikiC = _.chunk(
     [...Array(5 * 50)].map(() => _.random(0, 9)),
     50
 );
-const wikiD = _.chunk(
-    [...Array(50 * 18)].map(() => _.random(0, 9)),
-    18
-);
 
-console.log("Method 1", matMulCount(wikiA, wikiB) + matMulCount(matMul(wikiA, wikiB), wikiC));
-console.log("Method 2", matMulCount(wikiB, wikiC) + matMulCount(wikiA, matMul(wikiB, wikiC)));
+console.log(
+    "Wiki example ― Order 1 (manually)",
+    matMulCount(wikiA, wikiB) + matMulCount(matMul(wikiA, wikiB), wikiC),
+    "multiplications"
+);
+console.log(
+    "Wiki example ― Order 2 (manually)",
+    matMulCount(wikiB, wikiC) + matMulCount(wikiA, matMul(wikiB, wikiC)),
+    "multiplications"
+);
 
 // https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0_%D0%BE_%D0%BF%D0%BE%D1%80%D1%8F%D0%B4%D0%BA%D0%B5_%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%BD%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86?useskin=vector
 const matMulByOrder = (matricies, order) => {
@@ -283,9 +241,9 @@ const dynamicMatMulMinimize = (matricies) => {
 
         const optimalSolutionIndex = indexOfMinValue(targetValues);
         console.log(
-            "targetValues out of",
+            "Out of solutions with following multiplication counts:",
             targetValues,
-            "is smallest:",
+            "the smallest is ―",
             targetValues[indexOfMinValue(targetValues)]
         );
         return combinations[optimalSolutionIndex];
@@ -296,7 +254,34 @@ const dynamicMatMulMinimize = (matricies) => {
     return { solution: optimalSolution, targetFnValue: targetFn(matricies, optimalSolution) };
 };
 
-console.log("");
+const makeMultiplicableMatricies = (n, maxDimention) => {
+    const matriciesDimensions = [];
+
+    for (let i = 0; i < n; i++) {
+        let prevColDimension = _.random(1, maxDimention);
+        if (i !== 0) prevColDimension = matriciesDimensions[i - 1][1];
+
+        const rowDimension = prevColDimension;
+        const colDimension = _.random(1, maxDimention);
+
+        matriciesDimensions.push([rowDimension, colDimension]);
+    }
+    console.log("matriciesDimensions", matriciesDimensions);
+
+    const matricies = matriciesDimensions.map(([row, col]) =>
+        _.chunk(
+            [...Array(row * col)].map(() => _.random(0, 9)),
+            col
+        )
+    );
+
+    return matricies;
+};
+
+console.log("Randomly generated matricies");
+const matricies = makeMultiplicableMatricies(10, 9);
+console.log("matricies", matricies);
+
 const solution = dynamicMatMulMinimize(matricies);
 // const solution = dynamicMatMulMinimize([wikiA, wikiB, wikiC]);
 console.log("solution", solution);
