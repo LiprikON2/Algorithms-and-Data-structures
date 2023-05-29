@@ -151,7 +151,7 @@ console.log("Task 2");
 const makeMultiplicableMatricies = (n, maxDimention) => {
     const matriciesDimensions = [];
 
-    for (let i = 0; i < n * 2; i++) {
+    for (let i = 0; i < n; i++) {
         let prevColDimension = _.random(1, maxDimention);
         if (i !== 0) prevColDimension = matriciesDimensions[i - 1][1];
 
@@ -172,7 +172,7 @@ const makeMultiplicableMatricies = (n, maxDimention) => {
     return matricies;
 };
 
-const matricies = makeMultiplicableMatricies(4, 9);
+const matricies = makeMultiplicableMatricies(10, 9);
 
 console.log("matricies", matricies);
 
@@ -225,6 +225,10 @@ const wikiC = _.chunk(
     [...Array(5 * 50)].map(() => _.random(0, 9)),
     50
 );
+const wikiD = _.chunk(
+    [...Array(50 * 18)].map(() => _.random(0, 9)),
+    18
+);
 
 console.log("Method 1", matMulCount(wikiA, wikiB) + matMulCount(matMul(wikiA, wikiB), wikiC));
 console.log("Method 2", matMulCount(wikiB, wikiC) + matMulCount(wikiA, matMul(wikiB, wikiC)));
@@ -245,36 +249,54 @@ const matMulByOrder = (matricies, order) => {
     return [result, mulCount];
 };
 
-const ss = matMulByOrder([wikiA, wikiB, wikiC], [0, 0]);
-const ss1 = matMulByOrder([wikiA, wikiB, wikiC], [1, 0]);
-
-console.log("ss", ss);
-console.log("ss1", ss1);
-
-const orderCombinations = (matrixCount) => {
+const matMulOrderCombinations = (matrixCount) => {
     const ranges = [...Array(matrixCount - 1)].map((_, i) => matrixCount - i - 2);
     const orderRanges = ranges.map((range) => [...Array(range + 1)].map((_, i) => i));
-    console.log("ranges", ranges);
-    console.log("orderRanges", orderRanges);
 
     const recOrderCombinations = (orderRanges, order = []) => {
-        if (orderRanges.length === 1) return [[...order, orderRanges[0][0]]];
-
+        if (orderRanges.length === 1) {
+            const possibleOrders = [[...order, orderRanges[0][0]]];
+            return possibleOrders;
+        }
         let possibleOrders = [];
         for (let possbileK of orderRanges[0]) {
             const subPossibleOrders = recOrderCombinations(
                 orderRanges.slice(1, orderRanges.length),
                 [...order, possbileK]
             );
+
             possibleOrders.push(subPossibleOrders);
         }
-
         return possibleOrders.flat();
     };
 
     return recOrderCombinations(orderRanges);
 };
 
-const vv = orderCombinations(10);
+const dynamicMatMulMinimize = (matricies) => {
+    const targetFn = (matricies, order) => matMulByOrder(matricies, order)[1];
+    const indexOfMinValue = (arr) => _.indexOf(arr, _.min(arr));
 
-console.log("orderCombinations", vv);
+    const minimize = (matricies) => {
+        const combinations = matMulOrderCombinations(matricies.length);
+        const targetValues = combinations.map((combination) => targetFn(matricies, combination));
+
+        const optimalSolutionIndex = indexOfMinValue(targetValues);
+        console.log(
+            "targetValues out of",
+            targetValues,
+            "is smallest:",
+            targetValues[indexOfMinValue(targetValues)]
+        );
+        return combinations[optimalSolutionIndex];
+    };
+
+    const optimalSolution = minimize(matricies);
+
+    return { solution: optimalSolution, targetFnValue: targetFn(matricies, optimalSolution) };
+};
+
+console.log("");
+const solution = dynamicMatMulMinimize(matricies);
+// const solution = dynamicMatMulMinimize([wikiA, wikiB, wikiC]);
+console.log("solution", solution);
