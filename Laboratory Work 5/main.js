@@ -279,9 +279,62 @@ const makeMultiplicableMatricies = (n, maxDimention) => {
 };
 
 console.log("Randomly generated matricies");
-const matricies = makeMultiplicableMatricies(10, 9);
+// const matricies = makeMultiplicableMatricies(10, 9);
+const matricies = makeMultiplicableMatricies(3, 9);
 console.log("matricies", matricies);
 
 const solution = dynamicMatMulMinimize(matricies);
 // const solution = dynamicMatMulMinimize([wikiA, wikiB, wikiC]);
 console.log("solution", solution);
+
+console.log("");
+console.log("Task 3");
+
+const n = 10;
+
+const arrayN = [...Array(n)].map(() => _.random(-100, 100));
+// const arrayN = [10, 1, 2, 3, -1, 1, 2, 3, 4, 5, 6];
+
+console.log("arrayN", arrayN);
+
+const findBiggestIncreasingSeries = (array) => {
+    const makeSeries = (initIndex = null, initValues = []) => ({
+        startIndex: initIndex,
+        endIndex: null,
+        values: initValues,
+    });
+
+    let seriesList = [];
+    let currSeries = null;
+
+    for (let [index, value] of array.entries()) {
+        if (!currSeries) {
+            currSeries = makeSeries(index, [value]);
+        } else {
+            const lastValue = currSeries.values.at(-1);
+
+            if (lastValue < value) {
+                currSeries.values.push(value);
+                const isLastIteration = array.length === index + 1;
+                if (isLastIteration) {
+                    currSeries.endIndex = index - 1;
+                    seriesList.push(currSeries);
+                }
+            } else {
+                currSeries.endIndex = index - 1;
+                seriesList.push(currSeries);
+                currSeries = makeSeries(index, [value]);
+            }
+        }
+    }
+    console.log("seriesList", seriesList);
+
+    // Sort in descending order of series lengths
+    seriesList.sort((a, b) => b.values.length - a.values.length);
+
+    return seriesList[0];
+};
+
+const biggestSeries = findBiggestIncreasingSeries(arrayN);
+
+console.log("biggestSeries", biggestSeries);
