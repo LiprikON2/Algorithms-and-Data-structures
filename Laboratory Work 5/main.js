@@ -190,8 +190,8 @@ console.log(
 );
 
 // https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0_%D0%BE_%D0%BF%D0%BE%D1%80%D1%8F%D0%B4%D0%BA%D0%B5_%D0%BF%D0%B5%D1%80%D0%B5%D0%BC%D0%BD%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D1%86?useskin=vector
-const matMulByOrder = (matrixes, order) => {
-    let result = matrixes.slice();
+const matMulByOrder = (matrices, order) => {
+    let result = matrices.slice();
     let mulCount = 0;
 
     for (let k of order) {
@@ -229,13 +229,13 @@ const matMulOrderCombinations = (matrixCount) => {
     return recOrderCombinations(orderRanges);
 };
 
-const dynamicMatMulMinimize = (matrixes) => {
-    const targetFn = (matrixes, order) => matMulByOrder(matrixes, order)[1];
+const dynamicMatMulMinimize = (matrices) => {
+    const targetFn = (matrices, order) => matMulByOrder(matrices, order)[1];
     const indexOfMinValue = (arr) => _.indexOf(arr, _.min(arr));
 
-    const minimize = (matrixes) => {
-        const combinations = matMulOrderCombinations(matrixes.length);
-        const targetValues = combinations.map((combination) => targetFn(matrixes, combination));
+    const minimize = (matrices) => {
+        const combinations = matMulOrderCombinations(matrices.length);
+        const targetValues = combinations.map((combination) => targetFn(matrices, combination));
 
         const optimalSolutionIndex = indexOfMinValue(targetValues);
         console.log(
@@ -247,41 +247,41 @@ const dynamicMatMulMinimize = (matrixes) => {
         return combinations[optimalSolutionIndex];
     };
 
-    const optimalSolution = minimize(matrixes);
+    const optimalSolution = minimize(matrices);
 
-    return { solution: optimalSolution, targetFnValue: targetFn(matrixes, optimalSolution) };
+    return { solution: optimalSolution, targetFnValue: targetFn(matrices, optimalSolution) };
 };
 
-const makeMultiplicablematrixes = (n, maxDimention) => {
-    const matrixesDimensions = [];
+const makeMultiplicableMatrices = (n, maxDimention) => {
+    const matricesDimensions = [];
 
     for (let i = 0; i < n; i++) {
         let prevColDimension = _.random(1, maxDimention);
-        if (i !== 0) prevColDimension = matrixesDimensions[i - 1][1];
+        if (i !== 0) prevColDimension = matricesDimensions[i - 1][1];
 
         const rowDimension = prevColDimension;
         const colDimension = _.random(1, maxDimention);
 
-        matrixesDimensions.push([rowDimension, colDimension]);
+        matricesDimensions.push([rowDimension, colDimension]);
     }
-    console.log("matrixesDimensions", matrixesDimensions);
+    console.log("matricesDimensions", matricesDimensions);
 
-    const matrixes = matrixesDimensions.map(([row, col]) =>
+    const matrices = matricesDimensions.map(([row, col]) =>
         _.chunk(
             [...Array(row * col)].map(() => _.random(0, 9)),
             col
         )
     );
 
-    return matrixes;
+    return matrices;
 };
 
-console.log("Randomly generated matrixes");
-// const matrixes = makeMultiplicablematrixes(10, 9);
-const matrixes = makeMultiplicablematrixes(3, 9);
-console.log("matrixes", matrixes);
+console.log("Randomly generated matrices");
+// const matrices = makeMultiplicablematrices(10, 9);
+const matrices = makeMultiplicableMatrices(3, 9);
+console.log("matrices", matrices);
 
-const solution = dynamicMatMulMinimize(matrixes);
+const solution = dynamicMatMulMinimize(matrices);
 // const solution = dynamicMatMulMinimize([wikiA, wikiB, wikiC]);
 console.log("solution", solution);
 
