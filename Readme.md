@@ -1,6 +1,8 @@
 # Алгоритмы и структуры данных
 > K33401 - Рейнгеверц Вадим
 
+[![wakatime](https://wakatime.com/badge/github/LiprikON2/Alogrithms-and-Data-structures.svg)](https://wakatime.com/badge/github/LiprikON2/Alogrithms-and-Data-structures)
+
 ### Laboratory Works
 - [Laboratory Work 1](Laboratory%20Work%201/)
 - [Laboratory Work 2](Laboratory%20Work%202/)
